@@ -29,7 +29,7 @@ export const log = (arg) => { console.log(arg); return arg };
 
 export const copy = (arg) => JSON.parse(JSON.stringify(arg))
 
-export const count = (arr) => arr.reduce(
+export const count = reduce(
   {},
   (acc, curr) => {
     if (acc[curr]) {
