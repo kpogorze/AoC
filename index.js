@@ -1,9 +1,12 @@
 import { input } from "./input.js";
-import { count, desc, log, map, pipe, reduce, sort, split, splitByLine, sum, take, toInt } from "./utils.js";
+import { asc, copy, count, desc, log, map, pipe, reduce, sort, split, splitByLine, sum, take, toInt } from "./utils.js";
 
+const before = performance.now();
 
 pipe(
-  splitByLine,
-  
-  log
+  split(''),
+
+  log,
 )(input);
+
+console.log('Took', performance.now() - before)
