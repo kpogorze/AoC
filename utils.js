@@ -41,3 +41,5 @@ export const count = reduce(
     return acc
   }
 );
+
+export const pairwise = (arr) => arr.slice(1).map((val, i) => [arr[i], val])
