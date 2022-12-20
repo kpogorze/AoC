@@ -19,6 +19,8 @@ export const reduce = (init, reducer) => (arr) => arr.reduce(reducer, copy(init)
 
 export const toInt = (i) => parseInt(i, 10)
 
+export const toInts = (s) => Array.from(s.matchAll(/[-+]?\d+/g)).map(toInt)
+
 export const sum = reduce(0, (sum, curr) => sum += curr);
 
 export const take = (index) => (arr) => arr.slice(0, index);
@@ -43,3 +45,5 @@ export const count = reduce(
 );
 
 export const pairwise = (arr) => arr.slice(1).map((val, i) => [arr[i], val])
+
+export const range = (from, to) => Array.from({length: to + 1}, (_, i) => i).slice(from);
