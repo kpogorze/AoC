@@ -15,11 +15,13 @@ export const desc = (a, b) => b - a;
 
 export const map = (func) => (arr) => arr.map(func);
 
+export const filter = (func) => (arr) => arr.filter(func);
+
 export const reduce = (init, reducer) => (arr) => arr.reduce(reducer, copy(init));
 
 export const toInt = (i) => parseInt(i, 10)
 
-export const toInts = (s) => Array.from(s.matchAll(/[-+]?\d+/g)).map(toInt)
+export const toInts = (s) => Array.from(s.match(/[-+]?\d+/g)).map(toInt)
 
 export const sum = reduce(0, (sum, curr) => sum += curr);
 
@@ -47,3 +49,5 @@ export const count = reduce(
 export const pairwise = (arr) => arr.slice(1).map((val, i) => [arr[i], val])
 
 export const range = (from, to) => Array.from({length: to + 1}, (_, i) => i).slice(from);
+
+export const translate = (point, delta) => point.map((val, i) => val+delta[i])
