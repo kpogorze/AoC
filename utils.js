@@ -48,6 +48,12 @@ export const count = reduce(
 
 export const pairwise = (arr) => arr.slice(1).map((val, i) => [arr[i], val])
 
-export const range = (from, to) => Array.from({length: to + 1}, (_, i) => i).slice(from);
+export const range = (from, to) => Array.from({ length: to - from + 1 }, (_, i) => i + from);
 
-export const translate = (point, delta) => point.map((val, i) => val+delta[i])
+export const translate = (point, delta) => point.map((val, i) => val + delta[i])
+
+export const rotate = (amount) => (arr) => [...arr.slice(amount % arr.length), ...arr.slice(0, amount % arr.length)]
+
+export const negate = (func) => (...args) => !func(...args)
+
+export const divideWether = (func) => (arr) => [arr.filter(func), arr.filter(negate(func))]
