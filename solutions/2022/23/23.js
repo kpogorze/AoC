@@ -1,4 +1,4 @@
-import { pick, range, log, pipe, split, map, reduce, translate, divideWether, rotate } from "../../../utils.js"
+import { divideWether, log, map, pick, pipe, range, reduce, rotate, split, translate } from "../../../utils.js"
 
 const directions = {
   NW: [-1, -1],
