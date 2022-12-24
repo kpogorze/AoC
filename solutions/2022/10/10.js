@@ -1,4 +1,4 @@
-import { count, desc, log, map, pick, pipe, reduce, sort, split, splitByLine, sum, take, toInt } from "../../../utils.js";
+import { map, pipe, split, splitByLine, sum } from "../../../utils.js";
 
 const splitEvery = (n) => (arr) => {
   let res = [], tmp = [];
@@ -47,7 +47,7 @@ const second = pipe(
 
     return signal
   },
-  arr => arr.map((s, i) => Math.abs(s - (i % 40)) <= 1 ? '#' : '.'),
+  map((s, i) => Math.abs(s - (i % 40)) <= 1 ? '#' : '.'),
   splitEvery(40),
   map(a => a.join('')),
 );

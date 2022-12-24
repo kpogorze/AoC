@@ -1,48 +1,48 @@
 import { input } from "./input.js";
-import { count, desc, log, map, pipe, reduce, sort, split, splitByLine, sum, take, toInt, pick } from "../../../utils.js";
+import { asc, log, map, pick, pipe, sort, split, splitByLine, sum } from "../../../utils.js";
 
 const dirSizes = pipe(
   splitByLine,
   map(split(' ')),
   arr => {
     const root = {
-        name: '/',
-        size: 0,
-        children: []
-      }
+      name: '/',
+      size: 0,
+      children: []
+    }
     let path = [root];
     let currentDir = root;
     for (let i = 0; i < arr.length; i++) {
       let line = arr[i]
-      if(line[0] === '$') {
-        if(line[1] === 'cd') {
-          if(line[2] === '/') {
+      if (line[0] === '$') {
+        if (line[1] === 'cd') {
+          if (line[2] === '/') {
             currentDir = root
             path = [root]
-          } else if(line[2] === '..'){
+          } else if (line[2] === '..') {
             path.pop();
-            currentDir = path[path.length-1]
+            currentDir = path[path.length - 1]
           } else {
             currentDir = currentDir.children.find(dir => dir.name === line[2]);
             path.push(currentDir);
           }
         }
-        if(line[1] === 'ls') {
-          while (arr[i+1] && arr[i+1][0] !== '$') {
+        if (line[1] === 'ls') {
+          while (arr[i + 1] && arr[i + 1][0] !== '$') {
             i++
             line = arr[i]
             if (line[0] === 'dir') {
               const file = {
                 name: line[1],
                 size: 0,
-                children:[]
+                children: []
               };
               currentDir.children.push(file)
             } else {
               const file = {
                 name: line[1],
                 size: +line[0],
-                children:[]
+                children: []
               }
               currentDir.children.push(file)
             }
@@ -60,7 +60,7 @@ const dirSizes = pipe(
         map(getSize),
         sum
       )(file.children)
-      if (file.children.length){
+      if (file.children.length) {
         sizes.push(size);
       }
       return size;

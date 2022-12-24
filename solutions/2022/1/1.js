@@ -1,23 +1,8 @@
-import { pipe, splitByLine, map, toInt, sum, sort, desc, take } from "../../../utils.js";
-
-const splitByEmptyItem = (arr) => {
-  let res = [], tmp = [];
-
-  for (let i of arr) {
-    if (!i) {
-      res.push(tmp)
-      tmp = []
-    } else {
-      tmp.push(i);
-    }
-  }
-
-  return res
-};
+import { desc, map, pipe, sort, split, splitByLine, sum, take, toInt } from "../../../utils.js";
 
 const first = pipe(
-  splitByLine,
-  splitByEmptyItem,
+  split('\n\n'),
+  map(splitByLine),
   map(map(toInt)),
   map(sum),
   sort(desc),
@@ -26,8 +11,8 @@ const first = pipe(
 );
 
 const second = pipe(
-  splitByLine,
-  splitByEmptyItem,
+  split('\n\n'),
+  map(splitByLine),
   map(map(toInt)),
   map(sum),
   sort(desc),

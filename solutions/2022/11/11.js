@@ -1,26 +1,10 @@
-import { input } from "./input.js";
-import { asc, count, desc, log, map, pipe, reduce, sort, split, splitByLine, sum, take, toInt } from "../../../utils.js";
+import { desc, log, map, pipe, sort, split, splitByLine, toInt } from "../../../utils.js";
 
 const takeLast = arr => arr[arr.length - 1];
 
-const splitByEmptyItem = (arr) => {
-  let res = [], tmp = [];
-
-  for (let i of arr) {
-    if (!i) {
-      res.push(tmp)
-      tmp = []
-    } else {
-      tmp.push(i);
-    }
-  }
-
-  return res
-};
-
 const first = pipe(
-  splitByLine,
-  splitByEmptyItem,
+  split('\n\n'),
+  map(splitByLine),
   map(map(split(':'))),
   map((arr, i) => {
     let items = arr[1][1].split(',').map(s => toInt(s.trim()));
@@ -48,10 +32,10 @@ const first = pipe(
   }),
   log,
   monkeys => {
-    for(let i=0;i<20;i++) {
+    for (let i = 0; i < 20; i++) {
       monkeys.forEach((monkey) => {
         monkey.items.forEach(item => {
-          let newItem = Math.floor(monkey.operation(item)/3)
+          let newItem = Math.floor(monkey.operation(item) / 3)
           monkeys[monkey.test(newItem)].items.push(newItem)
           monkey.times++;
         });
@@ -59,7 +43,7 @@ const first = pipe(
         monkey.items = [];
       });
 
-      console.log(i+1, monkeys.map(m => m.times))
+      console.log(i + 1, monkeys.map(m => m.times))
     }
 
     return monkeys
@@ -67,13 +51,13 @@ const first = pipe(
   map(m => m.times),
   log,
   sort(desc),
-  a => a[0]*a[1],
+  a => a[0] * a[1],
   log
 );
 
 const second = pipe(
-  splitByLine,
-  splitByEmptyItem,
+  split('\n\n'),
+  map(splitByLine),
   map(map(split(':'))),
   map((arr, i) => {
     let items = arr[1][1].split(',').map(s => ({
@@ -106,16 +90,16 @@ const second = pipe(
     monkeys.forEach(monkey => {
       monkey.items.forEach(item => {
         modChecks.forEach(mod => {
-          item[mod] = item.value%mod
+          item[mod] = item.value % mod
         })
       })
     })
 
-    for(let i=0;i<10000;i++) {
+    for (let i = 0; i < 10000; i++) {
       monkeys.forEach((monkey) => {
         monkey.items.forEach(item => {
           modChecks.forEach(mod => {
-            item[mod] = monkey.operation(item[mod])%mod
+            item[mod] = monkey.operation(item[mod]) % mod
           })
           let newMonkeyId = monkey.test(item[monkey.mod])
           monkeys[newMonkeyId].items.push(item)
@@ -125,13 +109,13 @@ const second = pipe(
         monkey.items = [];
       });
 
-      console.log(i+1, monkeys.map(m => m.times))
+      console.log(i + 1, monkeys.map(m => m.times))
     }
 
     return monkeys
   },
   map(m => m.times),
   sort(desc),
-  a => a[0]*a[1],
+  a => a[0] * a[1],
   log
 )

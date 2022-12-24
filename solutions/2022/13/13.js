@@ -1,16 +1,16 @@
-import { asc, count, desc, log, map, pipe, reduce, sort, split, splitByLine, sum, take, toInt } from "../../../utils.js";
+import { map, pipe, sort, split, splitByLine, sum } from "../../../utils.js";
 
 const compare = (left, right) => {
   const max = Math.max(left.length, right.length)
 
   const coerce = val => Array.isArray(val) ? val : [val];
 
-  for(let i = 0; i < max; i++) {
-    let l = left[i], r=right[i];
-    
-    if(l === undefined) return true;
-    if(r === undefined) return false;
-    if(Number.isInteger(l) && Number.isInteger(r)) {
+  for (let i = 0; i < max; i++) {
+    let l = left[i], r = right[i];
+
+    if (l === undefined) return true;
+    if (r === undefined) return false;
+    if (Number.isInteger(l) && Number.isInteger(r)) {
       if (l < r) return true;
       if (r < l) return false;
       continue;
@@ -20,7 +20,7 @@ const compare = (left, right) => {
     r = coerce(r)
     const res = compare(l, r)
 
-    if(res === undefined) continue;
+    if (res === undefined) continue;
     return res;
   }
 }
@@ -42,10 +42,10 @@ const second = pipe(
   a => a.filter(Boolean),
   map(eval),
   a => [...a, firstPacket, secondPacket],
-  sort((l,r) => {
-    const res = compare(l,r);
+  sort((l, r) => {
+    const res = compare(l, r);
     if (res === undefined) return 0;
-    return res ? -1 : 1 
+    return res ? -1 : 1
   }),
-  a => (a.findIndex((i) => i === firstPacket)+1) * (a.findIndex((i) => i === secondPacket)+1),
+  a => (a.findIndex((i) => i === firstPacket) + 1) * (a.findIndex((i) => i === secondPacket) + 1),
 );

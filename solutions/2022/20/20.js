@@ -1,4 +1,4 @@
-import { pipe, split, map, toInt, log, sum, range } from "../../../utils.js";
+import { map, pipe, range, split, sum, toInt } from "../../../utils.js";
 
 const first = pipe(
   split('\n'),
@@ -28,7 +28,6 @@ const first = pipe(
   },
   sum,
 );
-
 
 const second = pipe(
   split('\n'),

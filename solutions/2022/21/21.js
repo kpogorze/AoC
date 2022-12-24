@@ -1,13 +1,15 @@
+import { pipe, split, map, toInt } from "../../../utils.js"
+
 const parseInput = pipe(
   split('\n'),
   map(split(': ')),
-  map(([a,b]) => [a, b.split(' ')])
+  map(([a, b]) => [a, b.split(' ')])
 )
 
-const add = (a,b) => a+b
-const sub = (a,b) => a-b
-const mul = (a,b) => a*b
-const div = (a,b) => a/b
+const add = (a, b) => a + b
+const sub = (a, b) => a - b
+const mul = (a, b) => a * b
+const div = (a, b) => a / b
 
 const first = pipe(
   parseInput,
@@ -57,7 +59,7 @@ const second = pipe(
 
       if (name === 'root') {
         func = () => [monkeysToFunc[operation[0]](), monkeysToFunc[operation[2]]()]
-      } else if(name === 'humn') {
+      } else if (name === 'humn') {
         humanValue = toInt(operation[0])
         func = () => humanValue
       } else if (operation.length === 1) {
@@ -95,8 +97,8 @@ const second = pipe(
       nextIntLeft = monkeysToFunc.root()[0]
     } while (Math.floor(nextIntLeft) !== nextIntLeft)
 
-    const valueIncrement = nextIntLeft-left;
+    const valueIncrement = nextIntLeft - left;
 
-    return ((right-left)/valueIncrement)*increment+initHumanValue
+    return ((right - left) / valueIncrement) * increment + initHumanValue
   },
 );

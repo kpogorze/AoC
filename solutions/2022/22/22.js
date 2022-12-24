@@ -1,4 +1,4 @@
-import { pipe, split, map, reduce, toInts, filter, pick, log, translate } from "../../../utils.js";
+import { filter, map, pick, pipe, reduce, split, toInts, translate } from "../../../utils.js";
 
 const directions = [
   [0, 1], // right

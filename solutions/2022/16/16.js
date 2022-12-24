@@ -1,4 +1,4 @@
-import { asc, copy, count, desc, log, map, pipe, reduce, sort, split, splitByLine, sum, take, toInt } from "../../../utils.js";
+import { map, pipe, reduce, split, toInt } from "../../../utils.js";
 
 const memoize = (fn) => {
   let hit = 0, miss = 0;
@@ -6,7 +6,7 @@ const memoize = (fn) => {
   return (...arg) => {
     const hash = arg.toString();
 
-    if(results.has(hash)) {
+    if (results.has(hash)) {
       hit++;
       return results.get(hash)
     }
@@ -42,15 +42,15 @@ const toNonZeroValvesGraph = valves => {
     const valveDistances = {};
     const visited = new Set([valveName]);
     let toCheck = [...valves[valveName][1].map(valve => [valve, 1])]
-    while(toCheck.length) {
+    while (toCheck.length) {
       const [currentValve, distance] = toCheck.shift();
       const [pressure, otherValves] = valves[currentValve]
       visited.add(currentValve);
-      if(pressure) {
+      if (pressure) {
         valveDistances[currentValve] = distance
       }
 
-      toCheck = toCheck.concat(otherValves.filter(n => !visited.has(n)).map(n => [n, distance+1]))
+      toCheck = toCheck.concat(otherValves.filter(n => !visited.has(n)).map(n => [n, distance + 1]))
     }
 
     return valveDistances
@@ -72,14 +72,14 @@ const first = pipe(
       const remainingValvesToCheck = valvesToCheck.filter(valve => valve !== valveName)
       const reachableValves = valvesToCheck.filter(valve => timeToOtherValves[valve] + 1 < remainingTime)
 
-      const maxFromReachableValves = reachableValves.length 
-      ? Math.max(...reachableValves.map(v => maxValue(v, remainingValvesToCheck, remainingTime - 1 - timeToOtherValves[v])))
-      : 0;
+      const maxFromReachableValves = reachableValves.length
+        ? Math.max(...reachableValves.map(v => maxValue(v, remainingValvesToCheck, remainingTime - 1 - timeToOtherValves[v])))
+        : 0;
 
-      return pressure*(remainingTime-1) + maxFromReachableValves;
+      return pressure * (remainingTime - 1) + maxFromReachableValves;
     }
 
-    return maxValue('AA', Object.keys(graph).filter(k => k!== 'AA'), 31)
+    return maxValue('AA', Object.keys(graph).filter(k => k !== 'AA'), 31)
   },
 );
 
@@ -88,12 +88,12 @@ const second = pipe(
   toNonZeroValvesGraph,
   graph => {
     // very slow, for proper solution remove slice at the end of line
-    const valvesToCheck = Object.keys(graph).filter(valve => valve !== 'AA').sort((a,b) => graph[b][0] - graph[a][0]).slice(0, 10);
+    const valvesToCheck = Object.keys(graph).filter(valve => valve !== 'AA').sort((a, b) => graph[b][0] - graph[a][0]).slice(0, 10);
     const time = 26;
     let bestScore = 0;
     let bestPath;
 
-    const calculateScore = memoize((path, timeLeft = time+1) => {
+    const calculateScore = memoize((path, timeLeft = time + 1) => {
       const [current, ...rest] = path;
       const [pressure, distances] = graph[current];
 
@@ -113,7 +113,7 @@ const second = pipe(
         .map(valve => [valve, secondTimePassed + timeIncrement(secondPath, valve)])
         .filter(([valve, newTime]) => newTime < time)
 
-      if((valvesAvailableToFirst.length + valvesAvailableToSecond.length) === 0) {
+      if ((valvesAvailableToFirst.length + valvesAvailableToSecond.length) === 0) {
         const finalPath = [firstPath, secondPath]
         const finalScore = calculateCombinedScore(finalPath)
         if (finalScore > bestScore) {
@@ -123,16 +123,16 @@ const second = pipe(
       }
 
       let pathsToCheck = [
-          ...valvesAvailableToFirst.map(([valve, newTime]) => [[...firstPath, valve], secondPath, newTime, secondTimePassed]),
-          ...valvesAvailableToSecond.map(([valve, newTime]) => [firstPath, [...secondPath, valve], firstTimePassed, newTime])
-        ]
+        ...valvesAvailableToFirst.map(([valve, newTime]) => [[...firstPath, valve], secondPath, newTime, secondTimePassed]),
+        ...valvesAvailableToSecond.map(([valve, newTime]) => [firstPath, [...secondPath, valve], firstTimePassed, newTime])
+      ]
 
       pathsToCheck.forEach(checkBestPath)
     }
 
     valvesToCheck
-      .flatMap((a,i) => valvesToCheck.slice(i+1).map(b => [a,b]))
-      .map(([a,b]) => [['AA',a],['AA',b], graph['AA'][1][a], graph['AA'][1][b]])
+      .flatMap((a, i) => valvesToCheck.slice(i + 1).map(b => [a, b]))
+      .map(([a, b]) => [['AA', a], ['AA', b], graph['AA'][1][a], graph['AA'][1][b]])
       .forEach(checkBestPath)
 
     return [bestPath, bestScore]
