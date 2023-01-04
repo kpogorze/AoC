@@ -3,6 +3,8 @@ export const pipe = (...functions) => functions.reduce(
   (arg) => arg
 );
 
+export const join = (char) => (arr) => arr.join(char)
+
 export const split = (char) => (str) => str.split(char);
 
 export const splitByLine = (input) => input.split('\n');
@@ -53,6 +55,8 @@ export const range = (from, to) => Array.from({ length: to - from + 1 }, (_, i) 
 export const translate = (point, delta) => point.map((val, i) => val + delta[i])
 
 export const rotate = (amount) => (arr) => [...arr.slice(amount % arr.length), ...arr.slice(0, amount % arr.length)]
+
+export const reverse = (arr) => [...arr].reverse()
 
 export const negate = (func) => (...args) => !func(...args)
 
