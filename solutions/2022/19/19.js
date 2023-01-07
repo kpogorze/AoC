@@ -1,65 +1,91 @@
-import { asc, copy, count, desc, log, map, pairwise, pipe, range, reduce, sort, split, splitByLine, sum, take, toInt, toInts } from "../../../utils.js";
+import { asc, copy, count, desc, log, map, multiply, pairwise, pipe, range, reduce, sort, split, splitByLine, sum, take, toInt, toInts } from "../../../utils.js";
 
 const parseInput = pipe(
   split('\n'),
   map(toInts),
 )
 
-pipe(
-  parseInput,
-  take(1),
-  map(([id, oreCost, clayCost, obsidianOreCost, obsidianClayCost, geodeOreCost, geodeObsidianCost]) => {
-    const solvePosition = (robotOrder, timeLimit) => {
-      const oreRobots = [0],
-        clayRobots = [],
-        obsidianRobots = [],
-        geodeRobots = [];
+const findMaxGeodes = (timeLimit) => 
+  ([id, oreRobotCost, clayRobotCost, obsidianRobotOreCost, obsidianRobotClayCost, geodeRobotOreCost, geodeRobotObsidianCost]) => {
 
-      const resourcesCollected = (robots, time) => robots.filter(t => t<time).length * time - sum(robots.filter(t => t<time))
-      const manufactureCost = (robots, cost, time) => robots.filter(t => t<=time).length * cost
-      
-      const oreAmount = (time) => (
-        resourcesCollected(oreRobots, time) 
-        - manufactureCost(oreRobots, oreCost, time) + oreCost 
-        - manufactureCost(clayRobots, clayCost, time) 
-        - manufactureCost(obsidianRobots, obsidianOreCost, time) 
-        - manufactureCost(geodeRobots, geodeOreCost, time)
-      )
-      const clayAmount = (time) => resourcesCollected(clayRobots, time) - manufactureCost(obsidianRobots, obsidianClayCost, time)
-      const obsidianAmount = (time) => resourcesCollected(obsidianRobots, time) - manufactureCost(geodeRobots, geodeObsidianCost, time)
-      const geodeAmount = (time) => resourcesCollected(geodeRobots, time)
+    const toCheck = [[1, 0, 0, 0, 0, 0, 0, 0, 0]];
+    let maxGeode = 0;
+    const maxOreUtility = Math.max(oreRobotCost, clayRobotCost, obsidianRobotOreCost, geodeRobotOreCost);
 
-      let robotToMake = robotOrder.shift();
+    while (toCheck.length) {
+      const [oreRobots, clayRobots, obsidianRobots, geodeRobots, ore, clay, obsidian, geode, time] = toCheck.pop();
+      const timeLeft = timeLimit - time;
 
-      for (const t of range(1,timeLimit-1)) {
-        if(robotToMake === 'g' && oreAmount(t)>=geodeOreCost && obsidianAmount(t)>=geodeObsidianCost) {
-          geodeRobots.push(t+1)
-          robotToMake = robotOrder.shift();
-        }
-        else if(robotToMake === 'o' && oreAmount(t)>=obsidianOreCost && clayAmount(t)>=obsidianClayCost) {
-          obsidianRobots.push(t+1)
-          robotToMake = robotOrder.shift();
-        }
-        else if(robotToMake === 'c' && oreAmount(t)>=clayCost) {
-          clayRobots.push(t+1)
-          robotToMake = robotOrder.shift();
-        }
-        else if(robotToMake === 'r' && oreAmount(t)>=oreCost) {
-          oreRobots.push(t+1)
-          robotToMake = robotOrder.shift();
-        }
+      if (timeLeft <= 0) continue;
+      if ((geode + geodeRobots * timeLeft + sum(range(1, timeLeft))) <= maxGeode) continue;
+
+      if (oreRobots < maxOreUtility) {
+        const timeToProduce = Math.ceil(Math.max(0, oreRobotCost - ore) / oreRobots)
+        const timeIncrement = timeToProduce + 1
+
+        toCheck.push([
+          oreRobots + 1, clayRobots, obsidianRobots, geodeRobots,
+          ore - oreRobotCost + oreRobots * timeIncrement, clay + clayRobots * timeIncrement, obsidian + obsidianRobots * timeIncrement, geode + geodeRobots * timeIncrement,
+          time + timeIncrement,
+        ]);
       }
 
-      if(robotOrder.length) throw 'bruh'
+      if (clayRobots < obsidianRobotClayCost) {
+        const timeToProduce = Math.ceil(Math.max(0, clayRobotCost - ore) / oreRobots)
+        const timeIncrement = timeToProduce + 1
 
-      console.log(oreAmount(timeLimit), clayAmount(timeLimit),obsidianAmount(timeLimit), geodeAmount(timeLimit) )
+        toCheck.push([
+          oreRobots, clayRobots + 1, obsidianRobots, geodeRobots,
+          ore - clayRobotCost + oreRobots * timeIncrement, clay + clayRobots * timeIncrement, obsidian + obsidianRobots * timeIncrement, geode + geodeRobots * timeIncrement,
+          time + timeIncrement,
+        ])
+      }
 
-      return [oreRobots, clayRobots, obsidianRobots, geodeRobots];
+      if (clayRobots && obsidianRobots < geodeRobotObsidianCost) {
+        const timeToProduceOre = Math.ceil(Math.max(0, obsidianRobotOreCost - ore) / oreRobots)
+        const timeToProduceClay = Math.ceil(Math.max(0, obsidianRobotClayCost - clay) / clayRobots)
+        const timeIncrement = Math.max(timeToProduceOre, timeToProduceClay) + 1
+
+        toCheck.push([
+          oreRobots, clayRobots, obsidianRobots + 1, geodeRobots,
+          ore - obsidianRobotOreCost + oreRobots * timeIncrement, clay - obsidianRobotClayCost + clayRobots * timeIncrement, obsidian + obsidianRobots * timeIncrement, geode + geodeRobots * timeIncrement,
+          time + timeIncrement,
+        ])
+      }
+
+      if (obsidianRobots) {
+        const timeToProduceOre = Math.ceil(Math.max(0, geodeRobotOreCost - ore) / oreRobots)
+        const timeToProduceObsidian = Math.ceil(Math.max(0, geodeRobotObsidianCost - obsidian) / obsidianRobots)
+        const timeIncrement = Math.max(timeToProduceOre, timeToProduceObsidian) + 1
+
+        toCheck.push([
+          oreRobots, clayRobots, obsidianRobots, geodeRobots + 1,
+          ore - geodeRobotOreCost + oreRobots * timeIncrement, clay + clayRobots * timeIncrement, obsidian - geodeRobotObsidianCost + obsidianRobots * timeIncrement, geode + geodeRobots * timeIncrement,
+          time + timeIncrement,
+        ])
+      }
+
+      if (geodeRobots) {
+        const geodesAtTimeLimit = geode + geodeRobots * timeLeft
+        if (geodesAtTimeLimit > maxGeode) {
+          maxGeode = geodesAtTimeLimit
+        }
+      }
     }
 
-    
+    return maxGeode
+  }
 
-    return solvePosition('cccocogg'.split(''), 24)
-  }),
-  log
-)(input);
+
+const first = pipe(
+  parseInput,
+  map(data => data[0] * findMaxGeodes(24)(data)),
+  sum
+)
+
+const second = pipe(
+  parseInput,
+  take(3),
+  map(findMaxGeodes(32)),
+  multiply
+)
