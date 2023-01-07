@@ -63,3 +63,11 @@ export const reverse = (arr) => [...arr].reverse()
 export const negate = (func) => (...args) => !func(...args)
 
 export const divideWether = (func) => (arr) => [arr.filter(func), arr.filter(negate(func))]
+
+export const gcd = (a, b) => {
+  if (b === 0) return a;
+
+  return a > b ? gcd(b, a % b) : gcd(a, b % a)
+}
+
+export const lcm = (a, b) => a * b / gcd(a, b)
