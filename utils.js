@@ -71,3 +71,5 @@ export const gcd = (a, b) => {
 }
 
 export const lcm = (a, b) => a * b / gcd(a, b)
+
+export const zip = (a,b) => a.map((aElem, i) => [aElem, b[i]])
