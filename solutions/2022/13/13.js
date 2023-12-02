@@ -1,12 +1,13 @@
-import { map, pipe, sort, split, splitByLine, sum } from "../../../utils.js";
+import { map, pipe, sort, split, splitByLine, sum } from '../../../utils.js';
 
 const compare = (left, right) => {
-  const max = Math.max(left.length, right.length)
+  const max = Math.max(left.length, right.length);
 
-  const coerce = val => Array.isArray(val) ? val : [val];
+  const coerce = (val) => (Array.isArray(val) ? val : [val]);
 
   for (let i = 0; i < max; i++) {
-    let l = left[i], r = right[i];
+    let l = left[i],
+      r = right[i];
 
     if (l === undefined) return true;
     if (r === undefined) return false;
@@ -14,38 +15,40 @@ const compare = (left, right) => {
       if (l < r) return true;
       if (r < l) return false;
       continue;
-    };
+    }
 
-    l = coerce(l)
-    r = coerce(r)
-    const res = compare(l, r)
+    l = coerce(l);
+    r = coerce(r);
+    const res = compare(l, r);
 
     if (res === undefined) continue;
     return res;
   }
-}
+};
 
 const first = pipe(
   split('\n\n'),
   map(splitByLine),
   map(map(eval)),
-  map(([left, right], i) => compare(left, right) ? i + 1 : undefined),
-  a => a.filter(Boolean),
-  sum,
+  map(([left, right], i) => (compare(left, right) ? i + 1 : undefined)),
+  (a) => a.filter(Boolean),
+  sum
 );
 
-const firstPacket = [[2]]
-const secondPacket = [[6]]
+const firstPacket = [[2]];
+const secondPacket = [[6]];
 
 const second = pipe(
   split('\n'),
-  a => a.filter(Boolean),
+  (a) => a.filter(Boolean),
   map(eval),
-  a => [...a, firstPacket, secondPacket],
+  (a) => [...a, firstPacket, secondPacket],
   sort((l, r) => {
     const res = compare(l, r);
     if (res === undefined) return 0;
-    return res ? -1 : 1
+    return res ? -1 : 1;
   }),
-  a => (a.findIndex((i) => i === firstPacket) + 1) * (a.findIndex((i) => i === secondPacket) + 1),
+  (a) =>
+    (a.findIndex((i) => i === firstPacket) + 1) *
+    (a.findIndex((i) => i === secondPacket) + 1)
 );

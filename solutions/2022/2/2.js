@@ -1,4 +1,4 @@
-import { map, pipe, split, splitByLine, sum } from "../../../utils.js";
+import { map, pipe, split, splitByLine, sum } from '../../../utils.js';
 
 const values = {
   A: 1,
@@ -7,7 +7,7 @@ const values = {
   X: 1,
   Y: 2,
   Z: 3,
-}
+};
 
 const first = pipe(
   splitByLine,
@@ -26,11 +26,9 @@ const second = pipe(
   map(split(' ')),
   map(([a, b]) => [values[a], values[b]]),
   map(([a, b]) => {
-    if (b == 1) return ((a + 1) % 3) + 1
-    if (b == 2) return a + 3
-    if (b == 3) return (a) % 3 + 1 + 6
+    if (b == 1) return ((a + 1) % 3) + 1;
+    if (b == 2) return a + 3;
+    if (b == 3) return (a % 3) + 1 + 6;
   }),
   sum
 );
-
-
