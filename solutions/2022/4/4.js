@@ -1,4 +1,4 @@
-import { map, pipe, split, splitByLine, sum, toInt } from "../../../utils.js"
+import { map, pipe, split, splitByLine, sum, toInt } from '../../../utils.js';
 
 const first = pipe(
   splitByLine,
@@ -6,18 +6,17 @@ const first = pipe(
   map(map(split('-'))),
   map(map(map(toInt))),
   map(([left, right]) => {
-    if ((left[0] <= right[0]) && (left[1] >= right[1])) {
-      return 1
+    if (left[0] <= right[0] && left[1] >= right[1]) {
+      return 1;
     }
 
-    if ((right[0] <= left[0]) && (right[1] >= left[1])) {
-      return 1
+    if (right[0] <= left[0] && right[1] >= left[1]) {
+      return 1;
     }
-    return 0
+    return 0;
   }),
-  sum,
-)
-
+  sum
+);
 
 const second = pipe(
   splitByLine,
@@ -25,14 +24,14 @@ const second = pipe(
   map(map(split('-'))),
   map(map(map(toInt))),
   map(([left, right]) => {
-    if ((left[0] <= right[0]) && (left[1] >= right[0])) {
-      return 1
+    if (left[0] <= right[0] && left[1] >= right[0]) {
+      return 1;
     }
 
-    if ((right[0] <= left[0]) && (right[1] >= left[0])) {
-      return 1
+    if (right[0] <= left[0] && right[1] >= left[0]) {
+      return 1;
     }
-    return 0
+    return 0;
   }),
-  sum,
-)
+  sum
+);
