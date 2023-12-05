@@ -25,7 +25,7 @@ export const reduce = (init, reducer) => (arr) =>
 
 export const toInt = (i) => parseInt(i, 10);
 
-export const toInts = (s) => Array.from(s.match(/[-+]?\d+/g)).map(toInt);
+export const toInts = (s) => Array.from(s.match(/[-+]?\d+/g) ?? []).map(toInt);
 
 export const sum = reduce(0, (sum, curr) => sum + curr);
 
