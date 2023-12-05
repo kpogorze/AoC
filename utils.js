@@ -16,6 +16,10 @@ export const asc = (a, b) => a - b;
 
 export const desc = (a, b) => b - a;
 
+export const max = (arr) => Math.max(...arr);
+
+export const min = (arr) => Math.min(...arr);
+
 export const map = (func) => (arr) => arr.map(func);
 
 export const filter = (func) => (arr) => arr.filter(func);
