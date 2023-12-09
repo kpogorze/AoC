@@ -1,4 +1,3 @@
-import { input } from './input.js';
 import {
   asc,
   copy,
@@ -32,6 +31,8 @@ import {
   translate,
   zip,
 } from './utils.js';
+
+const input = await fetch('./input.txt').then((response) => response.text());
 
 const before = performance.now();
 
