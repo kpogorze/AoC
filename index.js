@@ -6,6 +6,7 @@ import {
   divideWether,
   filter,
   gcd,
+  invoke,
   join,
   lcm,
   log,
@@ -15,6 +16,7 @@ import {
   multiply,
   negate,
   pairwise,
+  parseGrid,
   pick,
   pipe,
   range,
@@ -29,6 +31,7 @@ import {
   toInt,
   toInts,
   translate,
+  transpose,
   zip,
 } from './utils.js';
 

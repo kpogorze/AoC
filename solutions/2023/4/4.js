@@ -1,11 +1,15 @@
 import { map, pick, pipe, range, split, sum, toInts } from '../../../utils.js';
 
-const first = pipe(
+const parseInput = pipe(
   split('\n'),
   map(split(':')),
   map(pick(1)),
   map(split('|')),
-  map(map(toInts)),
+  map(map(toInts))
+);
+
+const first = pipe(
+  parseInput,
   map(
     ([winning, selected]) =>
       selected.filter((sel) => winning.includes(sel)).length
@@ -15,11 +19,7 @@ const first = pipe(
 );
 
 const second = pipe(
-  split('\n'),
-  map(split(':')),
-  map(pick(1)),
-  map(split('|')),
-  map(map(toInts)),
+  parseInput,
   map(
     ([winning, selected]) =>
       selected.filter((sel) => winning.includes(sel)).length

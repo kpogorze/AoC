@@ -1,12 +1,11 @@
 import {
   filter,
-  log,
   map,
   multiply,
+  parseGrid,
   pick,
   pipe,
   reduce,
-  split,
   sum,
   toInt,
   translate,
@@ -24,19 +23,18 @@ const adjacentDirections = [
 ];
 
 const first = pipe(
-  split('\n'),
-  map(split('')),
+  parseGrid,
   (grid) => {
     const numbers = [];
     for (let x = 0; x < grid.length; x++) {
       const row = grid[x];
       for (let y = 0; y < row.length; y++) {
         const col = row[y];
-        if (!Number.isNaN(toInt(row[y]))) {
+        if (!Number.isNaN(toInt(col))) {
           const number = [],
             positions = [];
-          while (!Number.isNaN(toInt(row[y]))) {
-            number.push(row[y]);
+          while (!Number.isNaN(toInt(col))) {
+            number.push(col);
             positions.push([x, y]);
             y++;
           }
@@ -62,9 +60,8 @@ const first = pipe(
       )
     ),
   map(pick(0)),
-  sum,
-  log
-)(input);
+  sum
+);
 
 const findStars = (arr) =>
   reduce([], (acc, row, x) => {
@@ -76,19 +73,18 @@ const findStars = (arr) =>
   })(arr);
 
 const second = pipe(
-  split('\n'),
-  map(split('')),
+  parseGrid,
   (grid) => {
     const numbers = [];
     for (let x = 0; x < grid.length; x++) {
       const row = grid[x];
       for (let y = 0; y < row.length; y++) {
         const col = row[y];
-        if (!Number.isNaN(toInt(row[y]))) {
+        if (!Number.isNaN(toInt(col))) {
           const number = [],
             positions = [];
-          while (!Number.isNaN(toInt(row[y]))) {
-            number.push(row[y]);
+          while (!Number.isNaN(toInt(col))) {
+            number.push(col);
             positions.push([x, y]);
             y++;
           }

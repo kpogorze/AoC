@@ -10,7 +10,7 @@ export const split = (char) => (str) => str.split(char);
 
 export const splitByLine = (input) => input.split('\n');
 
-export const sort = (compFunc) => (array) => array.sort(compFunc);
+export const sort = (compFunc) => (array) => array.toSorted(compFunc);
 
 export const asc = (a, b) => a - b;
 
@@ -37,7 +37,7 @@ export const multiply = reduce(1, (product, curr) => product * curr);
 
 export const take = (index) => (arr) => arr.slice(0, index);
 
-export const pick = (index) => (arr) => arr[index];
+export const pick = (index) => (arr) => arr.at(index);
 
 export const log = (arg) => {
   console.log(arg);
@@ -91,3 +91,8 @@ export const transpose = (grid) =>
   grid[0].map((_, col) => grid.map((row) => row[col]));
 
 export const parseGrid = pipe(split('\n'), map(split('')));
+
+export const invoke =
+  (methodName, ...args) =>
+  (obj) =>
+    obj[methodName](args);
