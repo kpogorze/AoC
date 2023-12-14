@@ -14,7 +14,7 @@ const first = pipe(
   map(split('')),
   map(map(toInt)),
   map(filter(negate(Number.isNaN))),
-  map((arr) => [arr[0], arr[arr.length - 1]]),
+  map((arr) => [arr[0], arr.at(-1)]),
   map(join('')),
   map(toInt),
   sum
@@ -50,7 +50,7 @@ const second = pipe(
   ),
   map(map(toInt)),
   map(filter(negate(Number.isNaN))),
-  map((arr) => [arr[0], arr[arr.length - 1]]),
+  map((arr) => [arr[0], arr.at(-1)]),
   map(join('')),
   map(toInt),
   sum

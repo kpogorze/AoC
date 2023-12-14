@@ -1,82 +1,60 @@
-import { filter, map, pick, pipe, split, sum, toInts } from '../../../utils.js';
+import {
+  filter,
+  map,
+  multiply,
+  pick,
+  pipe,
+  split,
+  sum,
+  toInts,
+} from '../../../utils.js';
 
-const first = pipe(
+const countMaxCubes = reduce(
+  {
+    red: 0,
+    blue: 0,
+    green: 0,
+  },
+  (acc, curr) => {
+    curr.forEach((pull) => {
+      if (pull.includes('red')) {
+        acc.red = Math.max(acc.red, toInts(pull).at(0));
+      }
+      if (pull.includes('blue')) {
+        acc.blue = Math.max(acc.blue, toInts(pull).at(0));
+      }
+      if (pull.includes('green')) {
+        acc.green = Math.max(acc.green, toInts(pull).at(0));
+      }
+    });
+
+    return acc;
+  }
+);
+
+const parseInput = pipe(
   split('\n'),
   map(split(':')),
-  map(([game, cubes]) => [
-    toInts(game).at(0),
-    cubes
-      .trim()
-      .split(';')
-      .map((s) => s.trim().split(',')),
-  ]),
-  map(([game, sets]) => [
-    game,
-    sets.reduce(
-      (acc, curr) => {
-        curr.forEach((pull) => {
-          if (pull.includes('red')) {
-            acc.red = Math.max(acc.red, toInts(pull).at(0));
-          }
-          if (pull.includes('blue')) {
-            acc.blue = Math.max(acc.blue, toInts(pull).at(0));
-          }
-          if (pull.includes('green')) {
-            acc.green = Math.max(acc.green, toInts(pull).at(0));
-          }
-        });
-        return acc;
-      },
-      {
-        red: 0,
-        blue: 0,
-        green: 0,
-      }
-    ),
-  ]),
+  map(pick(1)),
+  map(split(';')),
+  map(map(split(',')))
+);
+
+const first = pipe(
+  parseInput,
+  map(countMaxCubes),
+  map((el, i) => [el, i + 1]),
   filter(
-    ([game, maxPulls]) =>
+    ([maxPulls]) =>
       maxPulls.red <= 12 && maxPulls.green <= 13 && maxPulls.blue <= 14
   ),
-  map(pick(0)),
+  map(pick(1)),
   sum
 );
 
 const second = pipe(
-  split('\n'),
-  map(split(':')),
-  map(([game, cubes]) => [
-    toInts(game).at(0),
-    cubes
-      .trim()
-      .split(';')
-      .map((s) => s.trim().split(',')),
-  ]),
-  map(([game, sets]) => [
-    game,
-    sets.reduce(
-      (acc, curr) => {
-        curr.forEach((pull) => {
-          if (pull.includes('red')) {
-            acc.red = Math.max(acc.red, toInts(pull).at(0));
-          }
-          if (pull.includes('blue')) {
-            acc.blue = Math.max(acc.blue, toInts(pull).at(0));
-          }
-          if (pull.includes('green')) {
-            acc.green = Math.max(acc.green, toInts(pull).at(0));
-          }
-        });
-
-        return acc;
-      },
-      {
-        red: 0,
-        blue: 0,
-        green: 0,
-      }
-    ),
-  ]),
-  map(([game, maxPulls]) => maxPulls.red * maxPulls.blue * maxPulls.green),
+  parseInput,
+  map(countMaxCubes),
+  map(pipe(Object.values, multiply)),
   sum
 );

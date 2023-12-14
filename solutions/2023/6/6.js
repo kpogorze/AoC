@@ -1,6 +1,5 @@
 import {
   join,
-  log,
   map,
   multiply,
   pipe,
