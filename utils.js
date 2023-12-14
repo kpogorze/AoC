@@ -67,7 +67,7 @@ export const translate = (point, delta) =>
 export const rotate = (amount) => (arr) =>
   [...arr.slice(amount % arr.length), ...arr.slice(0, amount % arr.length)];
 
-export const reverse = (arr) => [...arr].reverse();
+export const reverse = (arr) => arr.toReversed();
 
 export const negate =
   (func) =>
@@ -86,3 +86,8 @@ export const gcd = (a, b) => {
 export const lcm = (a, b) => (a * b) / gcd(a, b);
 
 export const zip = (a, b) => a.map((aElem, i) => [aElem, b[i]]);
+
+export const transpose = (grid) =>
+  grid[0].map((_, col) => grid.map((row) => row[col]));
+
+export const parseGrid = pipe(split('\n'), map(split('')));
