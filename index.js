@@ -11,6 +11,7 @@ import {
   lcm,
   log,
   map,
+  mapObject,
   max,
   min,
   multiply,

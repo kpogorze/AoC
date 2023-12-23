@@ -96,3 +96,6 @@ export const invoke =
   (methodName, ...args) =>
   (obj) =>
     obj[methodName](args);
+
+export const mapObject = (mapFn) => (obj) =>
+  Object.fromEntries(Object.entries(obj).map(mapFn));
