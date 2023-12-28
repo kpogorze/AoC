@@ -1,11 +1,17 @@
 import {
+  allNeighborDirs,
+  apply,
   asc,
+  cartesian,
   copy,
   count,
   desc,
   divideWether,
+  eq,
   filter,
   gcd,
+  getAllNeighbors,
+  getPointValue,
   invoke,
   join,
   lcm,
@@ -20,6 +26,7 @@ import {
   parseGrid,
   pick,
   pipe,
+  pluck,
   range,
   reduce,
   reverse,
@@ -27,6 +34,7 @@ import {
   sort,
   split,
   splitByLine,
+  spreadGrid,
   sum,
   take,
   toInt,
@@ -40,10 +48,14 @@ const input = await fetch('./input.txt').then((response) => response.text());
 
 const before = performance.now();
 
-pipe(
-  split(''),
+const parseInput = pipe(split(''));
 
-  log
-)(input);
+const first = pipe(parseInput);
+
+const second = pipe(parseInput);
+
+pipe(first, log)(input);
+
+pipe(second, log)(input);
 
 console.log('Took', performance.now() - before);
