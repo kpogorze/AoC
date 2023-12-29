@@ -5,7 +5,7 @@ import {
   min,
   pick,
   pipe,
-  range,
+  sequence,
   sort,
   split,
   sum,
@@ -42,7 +42,7 @@ const calculateSurfaceArea = (digs) => {
 
   let total = 0;
 
-  range(minX, maxX).forEach((x) => {
+  sequence(minX, maxX).forEach((x) => {
     const horizontalEdges = edges
       .filter(([from, to]) => from[0] === x && to[0] === x)
       .map(map(pick(1)))

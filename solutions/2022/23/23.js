@@ -4,7 +4,7 @@ import {
   map,
   pick,
   pipe,
-  range,
+  sequence,
   reduce,
   rotate,
   split,
@@ -35,9 +35,9 @@ const debug = (elves) => {
   const maxY = Math.max(...elves.map(pick(1)));
   const minY = Math.min(...elves.map(pick(1)));
 
-  const level = range(minX, maxX)
+  const level = sequence(minX, maxX)
     .map((x) =>
-      range(minY, maxY)
+      sequence(minY, maxY)
         .map((y) =>
           elves.map((e) => e.toString()).includes([x, y].toString()) ? '#' : '.'
         )

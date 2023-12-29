@@ -27,7 +27,7 @@ import {
   pick,
   pipe,
   pluck,
-  range,
+  sequence,
   reduce,
   reverse,
   rotate,

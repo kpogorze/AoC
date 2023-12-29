@@ -4,7 +4,7 @@ import {
   mapObject,
   pairwise,
   pipe,
-  range,
+  sequence,
   split,
 } from '../../../utils.js';
 
@@ -43,7 +43,7 @@ const first = pipe(
       }
     });
 
-    range(1, 1000).forEach(() => {
+    sequence(1, 1000).forEach(() => {
       low++;
       const pulses = gateGrid['roadcaster'].destList.map((dest) => [
         dest,
@@ -120,7 +120,7 @@ const second = pipe(
       }
     });
 
-    for (const buttonPresses of range(1, 100000)) {
+    for (const buttonPresses of sequence(1, 100000)) {
       const pulses = gateGrid['roadcaster'].destList.map((dest) => [
         dest,
         'low',

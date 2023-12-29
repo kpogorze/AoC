@@ -4,7 +4,7 @@ import {
   max,
   parseGrid,
   pipe,
-  range,
+  sequence,
   translate,
 } from '../../../utils.js';
 
@@ -120,19 +120,19 @@ const second = pipe(
   parseGrid,
   (grid) => {
     return [
-      ...range(0, grid.length - 1).map((i) => [
+      ...sequence(0, grid.length - 1).map((i) => [
         grid,
         [[[0, i], directions.south]],
       ]),
-      ...range(0, grid.length - 1).map((i) => [
+      ...sequence(0, grid.length - 1).map((i) => [
         grid,
         [[[i, 0], directions.east]],
       ]),
-      ...range(0, grid.length - 1).map((i) => [
+      ...sequence(0, grid.length - 1).map((i) => [
         grid,
         [[[grid.length - 1, i], directions.north]],
       ]),
-      ...range(0, grid.length - 1).map((i) => [
+      ...sequence(0, grid.length - 1).map((i) => [
         grid,
         [[[i, grid.length - 1], directions.west]],
       ]),

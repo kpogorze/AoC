@@ -1,4 +1,4 @@
-import { map, pipe, range, split, sum, toInts } from '../../../utils.js';
+import { map, pipe, sequence, split, sum, toInts } from '../../../utils.js';
 
 const memoize = (fn) => {
   let hit = 0,
@@ -68,10 +68,10 @@ const both = pipe(
   split('\n'),
   map(split(' ')),
   map(([gears, operational]) => [
-    range(1, foldRate)
+    sequence(1, foldRate)
       .map(() => gears)
       .join('?'),
-    range(1, foldRate)
+    sequence(1, foldRate)
       .map(() => operational)
       .join(','),
   ]),

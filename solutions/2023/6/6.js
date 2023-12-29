@@ -3,7 +3,7 @@ import {
   map,
   multiply,
   pipe,
-  range,
+  sequence,
   split,
   toInt,
   toInts,
@@ -15,7 +15,7 @@ const first = pipe(
   map(toInts),
   (a) => zip(...a),
   map(([time, distance]) => {
-    return range(0, time).filter((held) => held * (time - held) > distance)
+    return sequence(0, time).filter((held) => held * (time - held) > distance)
       .length;
   }),
   multiply
@@ -27,7 +27,7 @@ const second = pipe(
   map(join('')),
   map(toInt),
   ([time, distance]) => {
-    return range(0, time).filter((held) => held * (time - held) > distance)
+    return sequence(0, time).filter((held) => held * (time - held) > distance)
       .length;
   }
 );

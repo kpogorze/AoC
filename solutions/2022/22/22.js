@@ -4,7 +4,7 @@ import {
   map,
   pick,
   pipe,
-  range,
+  sequence,
   reduce,
   split,
   toInts,
@@ -104,7 +104,7 @@ const first = pipe(
 
 const edgeSize = 50;
 
-const edgePoints = range(0, edgeSize - 1);
+const edgePoints = sequence(0, edgeSize - 1);
 
 const edgeMapping = new Map();
 
