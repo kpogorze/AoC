@@ -4,7 +4,7 @@ import {
   max,
   parseGrid,
   pipe,
-  range,
+  sequence,
   sum,
   translate,
 } from '../../../utils.js';
@@ -146,8 +146,8 @@ const second = pipe(
       areas.push(currArea);
     }
 
-    for (const x of range(0, grid.length - 1)) {
-      for (const y of range(0, grid.length - 1)) {
+    for (const x of sequence(0, grid.length - 1)) {
+      for (const y of sequence(0, grid.length - 1)) {
         const tile = grid[x][y];
         if (tile !== '.' && tile !== '#') {
           const dir = acceptableSlopeDirs[tile];

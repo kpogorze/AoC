@@ -1,4 +1,4 @@
-import { map, pipe, range, split, sum, toInt } from '../../../utils.js';
+import { map, pipe, sequence, split, sum, toInt } from '../../../utils.js';
 
 const first = pipe(
   split('\n'),
@@ -45,7 +45,7 @@ const second = pipe(
       order,
     }));
 
-    range(1, 10).forEach(() => {
+    sequence(1, 10).forEach(() => {
       numbers.forEach((val, ord) => {
         const currentIndex = res.findIndex(({ order }) => ord === order);
         const currentNumber = res[currentIndex];

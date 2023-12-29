@@ -2,7 +2,7 @@ import {
   map,
   multiply,
   pipe,
-  range,
+  sequence,
   split,
   sum,
   take,
@@ -46,7 +46,10 @@ const findMaxGeodes =
       const timeLeft = timeLimit - time;
 
       if (timeLeft <= 0) continue;
-      if (geode + geodeRobots * timeLeft + sum(range(1, timeLeft)) <= maxGeode)
+      if (
+        geode + geodeRobots * timeLeft + sum(sequence(1, timeLeft)) <=
+        maxGeode
+      )
         continue;
 
       if (oreRobots < maxOreUtility) {

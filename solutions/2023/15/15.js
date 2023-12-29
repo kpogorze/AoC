@@ -1,4 +1,4 @@
-import { map, pipe, range, reduce, split, sum } from '../../../utils.js';
+import { map, pipe, sequence, reduce, split, sum } from '../../../utils.js';
 
 const calculateHash = reduce(
   0,
@@ -10,7 +10,7 @@ const first = pipe(split(','), map(split('')), map(calculateHash), sum);
 pipe(
   split(','),
   (arr) => {
-    const boxes = range(1, 256).map(() => []);
+    const boxes = sequence(1, 256).map(() => []);
 
     for (const el of arr) {
       if (el.includes('=')) {

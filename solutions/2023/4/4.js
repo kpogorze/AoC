@@ -1,4 +1,12 @@
-import { map, pick, pipe, range, split, sum, toInts } from '../../../utils.js';
+import {
+  map,
+  pick,
+  pipe,
+  sequence,
+  split,
+  sum,
+  toInts,
+} from '../../../utils.js';
 
 const parseInput = pipe(
   split('\n'),
@@ -29,7 +37,7 @@ const second = pipe(
 
     for (let i = 0; i < couponAmounts.length; i++) {
       const curr = couponAmounts[i];
-      range(i + 1, i + winningNumbersCounts[i]).forEach(
+      sequence(i + 1, i + winningNumbersCounts[i]).forEach(
         (iel) => (couponAmounts[iel] += curr)
       );
     }

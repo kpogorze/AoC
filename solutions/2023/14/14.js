@@ -2,7 +2,7 @@ import {
   map,
   parseGrid,
   pipe,
-  range,
+  sequence,
   reverse,
   sum,
   transpose,
@@ -11,7 +11,7 @@ import {
 const calculateScore = pipe(
   transpose,
   map((col) =>
-    range(1, col.length)
+    sequence(1, col.length)
       .toReversed()
       .map((score, i) => (col[i] === 'O' ? score : 0))
   ),

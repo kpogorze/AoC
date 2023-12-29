@@ -1,7 +1,7 @@
 import {
   reduce,
   translate,
-  range,
+  sequence,
   lcm,
   pipe,
   split,
@@ -54,8 +54,8 @@ const moveBlizzard = ([rows, cols, blizzards]) =>
   });
 
 const findFreePostitions = ([rows, cols, blizzards]) => {
-  const allSpots = range(0, rows - 1).flatMap((x) =>
-    range(0, cols - 1).map((y) => [x, y])
+  const allSpots = sequence(0, rows - 1).flatMap((x) =>
+    sequence(0, cols - 1).map((y) => [x, y])
   );
   const takenSpots = new Set(
     blizzards.map(([spot, directions]) => spot.toString())
@@ -72,7 +72,7 @@ const findFreePostitions = ([rows, cols, blizzards]) => {
 const extractFreePositions = ([rows, cols, blizzards]) => {
   const cycleLength = lcm(rows, cols);
   const blizzardPostitions = [blizzards];
-  range(1, cycleLength - 1).forEach((i) => {
+  sequence(1, cycleLength - 1).forEach((i) => {
     const prevBlizzards = blizzardPostitions[i - 1];
     blizzardPostitions[i] = moveBlizzard([rows, cols, prevBlizzards]);
   });

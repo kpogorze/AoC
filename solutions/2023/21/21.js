@@ -5,7 +5,7 @@ import {
   parseGrid,
   pick,
   pipe,
-  range,
+  sequence,
   sum,
   toInt,
   toInts,
@@ -26,9 +26,9 @@ const debug = (possible) => {
   const maxY = Math.max(...possible.map(pick(1)), debugGrid.length - 1);
   const minY = Math.min(...possible.map(pick(1)), 0);
 
-  const level = range(minX, maxX)
+  const level = sequence(minX, maxX)
     .map((x) =>
-      range(minY, maxY)
+      sequence(minY, maxY)
         .map((y) => {
           const adjustedX =
             ((x % debugGrid.length) + debugGrid.length) % debugGrid.length;
@@ -51,8 +51,8 @@ const debug = (possible) => {
 const first = pipe(
   parseGrid,
   (grid) => {
-    for (const x of range(0, grid.length - 1)) {
-      for (const y of range(0, grid.length - 1)) {
+    for (const x of sequence(0, grid.length - 1)) {
+      for (const y of sequence(0, grid.length - 1)) {
         if (grid[x][y] === 'S') {
           return [grid, [x, y]];
         }
@@ -63,7 +63,7 @@ const first = pipe(
     let nextToCheck = new Set([startingPos.toString()]);
     let toCheck = [];
 
-    for (const step of range(1, 65)) {
+    for (const step of sequence(1, 65)) {
       toCheck = Array.from(nextToCheck)
         .map((el) => el.split(','))
         .map(map(toInt));
@@ -97,8 +97,8 @@ const calcDiffs = pipe(
 const second = pipe(
   parseGrid,
   (grid) => {
-    for (const x of range(0, grid.length - 1)) {
-      for (const y of range(0, grid.length - 1)) {
+    for (const x of sequence(0, grid.length - 1)) {
+      for (const y of sequence(0, grid.length - 1)) {
         if (grid[x][y] === 'S') {
           return [grid, [x, y]];
         }
@@ -109,7 +109,7 @@ const second = pipe(
     const newPositions = [new Set([startingPos.toString()])];
     const positionsCount = [];
 
-    for (const step of range(1, 1000)) {
+    for (const step of sequence(1, 1000)) {
       const outers = new Set();
       outers.va;
       const positionsToCheck = Array.from(newPositions.at(-1).values()).map(

@@ -8,7 +8,7 @@ import {
   parseGrid,
   pick,
   pipe,
-  range,
+  sequence,
   spreadGrid,
   sum,
   toInt,
@@ -19,7 +19,7 @@ const parseInput = pipe(parseGrid, (grid) => {
     Array.from(row.join('').matchAll(/\d+/dg)).map((match) => [
       toInt(match[0]),
       // TODO change to apply(leftExclusiveRange)
-      range(match.indices[0][0], match.indices[0][1] - 1)
+      sequence(match.indices[0][0], match.indices[0][1] - 1)
         .map((y) => [x, y])
         .flatMap(getAllNeighbors),
     ])

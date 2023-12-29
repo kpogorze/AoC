@@ -100,7 +100,7 @@ export const gcd = (a, b) => {
 
 export const lcm = (a, b) => (a * b) / gcd(a, b);
 
-export const range = (from, to) =>
+export const sequence = (from, to) =>
   Array.from({ length: to - from + 1 }, (_, i) => i + from);
 
 /*---------------------------------- OBJECT ----------------------------------*/

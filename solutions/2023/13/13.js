@@ -1,11 +1,11 @@
-import { map, pairwise, pipe, range, split, sum } from '../../../utils.js';
+import { map, pairwise, pipe, sequence, split, sum } from '../../../utils.js';
 
 const countReflections = (grid) =>
   sum(
     pairwise(grid).map(([rowA, rowB], rowId) => {
       if (rowA.every((el, i) => el === rowB[i])) {
         const reflectionLen = Math.min(rowId + 1, grid.length - rowId - 1);
-        const reflectionPairs = range(0, reflectionLen - 1).map((i) => [
+        const reflectionPairs = sequence(0, reflectionLen - 1).map((i) => [
           rowId - i,
           rowId + 1 + i,
         ]);
@@ -43,7 +43,7 @@ const countReflectionsWithSmudges = (grid) =>
       if (smudgesCount <= 1) {
         const smudgesLeft = 1 - smudgesCount;
         const reflectionLen = Math.min(rowId + 1, grid.length - rowId - 1);
-        const reflectionPairs = range(0, reflectionLen - 2).map((i) => [
+        const reflectionPairs = sequence(0, reflectionLen - 2).map((i) => [
           rowId - 1 - i,
           rowId + 2 + i,
         ]);
