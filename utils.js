@@ -118,11 +118,27 @@ export const mapObject = curry((mapFn, obj) =>
   Object.fromEntries(Object.entries(obj).map(mapFn))
 );
 
-/*---------------------------------- GRID ----------------------------------*/
+export const eq = curry((a, b) => {
+  if (Array.isArray(a) && Array.isArray(b)) {
+    return a.length === b.length && a.every((el, i) => eq(el, b[i]));
+  }
 
-export const eq = curry(
-  (a, b) => a.every((el, i) => el === b[i]) && a.length === b.length
-);
+  if (
+    a != null &&
+    typeof a === 'object' &&
+    b != null &&
+    typeof b === 'object'
+  ) {
+    if (a[Symbol.iterator] && b[Symbol.iterator]) {
+      return eq([...a], [...b]);
+    }
+    return eq(Object.entries(a), Object.entries(b));
+  }
+
+  return a === b;
+});
+
+/*---------------------------------- GRID ----------------------------------*/
 
 export const getPointValue = curry((grid, [x, y]) => grid[x]?.[y]);
 
