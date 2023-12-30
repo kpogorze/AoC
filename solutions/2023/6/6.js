@@ -1,4 +1,5 @@
 import {
+  apply,
   join,
   map,
   multiply,
@@ -13,11 +14,11 @@ import {
 const first = pipe(
   split('\n'),
   map(toInts),
-  (a) => zip(...a),
-  map(([time, distance]) => {
-    return sequence(0, time).filter((held) => held * (time - held) > distance)
-      .length;
-  }),
+  apply(zip),
+  map(
+    ([time, distance]) =>
+      sequence(0, time).filter((held) => held * (time - held) > distance).length
+  ),
   multiply
 );
 
@@ -26,8 +27,6 @@ const second = pipe(
   map(toInts),
   map(join('')),
   map(toInt),
-  ([time, distance]) => {
-    return sequence(0, time).filter((held) => held * (time - held) > distance)
-      .length;
-  }
+  ([time, distance]) =>
+    sequence(0, time).filter((held) => held * (time - held) > distance).length
 );
