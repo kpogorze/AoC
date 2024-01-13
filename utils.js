@@ -8,11 +8,12 @@
 */
 
 /*---------------------------------- FUNCTIONS ----------------------------------*/
+export const I = (val) => val;
+
+export const K = (val) => () => val;
+
 export const pipe = (...functions) =>
-  functions.reduce(
-    (combined, func) => (arg) => func(combined(arg)),
-    (arg) => arg
-  );
+  functions.reduce((combined, func) => (arg) => func(combined(arg)), I);
 
 export const exec = (arg, ...functions) =>
   functions.reduce((result, func) => func(result), arg);
@@ -32,6 +33,11 @@ export const curryN = (arity, func) =>
   };
 
 export const apply = curry((func, args) => func.apply(null, args));
+
+export const call =
+  (...args) =>
+  (func) =>
+    func.call(null, ...args);
 
 export const invoke =
   (methodName, ...args) =>
@@ -97,6 +103,8 @@ export const asc = (a, b) => a - b;
 export const desc = (a, b) => b - a;
 
 export const map = curry((func, arr) => arr.map(func));
+
+export const find = curry((func, arr) => arr.find(func));
 
 export const flatten = (arr) => arr.flat();
 
@@ -167,6 +175,14 @@ export const gcd = (a, b) => {
 export const lcm = (a, b) => (a * b) / gcd(a, b);
 
 export const cartesian = (a, b) => a.flatMap((ai) => b.map((bi) => [ai, bi]));
+
+/*---------------------------------- GENERAL ----------------------------------*/
+
+export const orElse = curry((def, val) => val ?? def);
+
+export const match = curry((rules, val) =>
+  exec(rules, find(pipe(start, call(val))), orElse([K(null)]), end, call(val))
+);
 
 /*---------------------------------- RANGES ----------------------------------*/
 
