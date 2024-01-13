@@ -1,10 +1,19 @@
 import {
   count,
   desc,
+  divideWether,
+  end,
+  eq,
+  exec,
+  K,
   map,
+  match,
+  orElse,
+  pick,
   pipe,
   sort,
   split,
+  start,
   sum,
   toInt,
 } from '../../../utils.js';
@@ -25,50 +34,6 @@ const cards = [
   '2',
 ].toReversed();
 
-const handStrength = (hand) => {
-  const cardCount = count(
-    hand.split('').map((card) => cards.findIndex((c) => c === card))
-  );
-  const values = Object.values(cardCount).sort(desc);
-  switch (values[0]) {
-    case 5:
-      return 7;
-    case 4:
-      return 6;
-    case 3:
-      return values[1] === 2 ? 5 : 4;
-    case 2:
-      return values[1] === 2 ? 3 : 2;
-    case 1:
-      return 1;
-    default:
-      break;
-  }
-};
-
-const first = pipe(
-  split('\n'),
-  map(split(' ')),
-  map(([hand, bid]) => [hand, toInt(bid)]),
-  sort(([handA], [handB]) => {
-    if (handStrength(handA) === handStrength(handB)) {
-      for (let i = 0; i < handA.length; i++) {
-        const aOrder = cards.findIndex((c) => c === handA[i]);
-        const bOrder = cards.findIndex((c) => c === handB[i]);
-        if (aOrder === bOrder) continue;
-
-        return aOrder - bOrder;
-      }
-
-      return 0;
-    }
-
-    return handStrength(handA) - handStrength(handB);
-  }),
-  map(([hand, bid], i) => bid * (i + 1)),
-  sum
-);
-
 const cardsWithJoker = [
   'A',
   'K',
@@ -85,41 +50,46 @@ const cardsWithJoker = [
   'J',
 ].toReversed();
 
-const handStrengthWithJokers = (hand) => {
-  const cardCount = count(
-    hand
-      .split('')
-      .filter((c) => c !== 'J')
-      .map((card) => cardsWithJoker.findIndex((c) => c === card))
-  );
-  const values = Object.values(cardCount).sort(desc);
-  const jokerCount = hand.split('').filter((c) => c === 'J').length;
+const handType = match([
+  [pipe(pick(0), eq(5)), K(7)],
+  [pipe(pick(0), eq(4)), K(6)],
+  [pipe(pick(0), eq(3)), pipe(pick(1), match([[eq(2), K(5)]]), orElse(4))],
+  [pipe(pick(0), eq(2)), pipe(pick(1), match([[eq(2), K(3)]]), orElse(2))],
+  [pipe(pick(0), eq(1)), K(1)],
+]);
 
-  switch ((values[0] ?? 0) + jokerCount) {
-    case 5:
-      return 7;
-    case 4:
-      return 6;
-    case 3:
-      return values[1] === 2 ? 5 : 4;
-    case 2:
-      return values[1] === 2 ? 3 : 2;
-    case 1:
-      return 1;
-    default:
-      break;
-  }
-};
+const handStrength = pipe(
+  split(''),
+  count,
+  Object.values,
+  sort(desc),
+  handType
+);
 
-const second = pipe(
-  split('\n'),
-  map(split(' ')),
-  map(([hand, bid]) => [hand, toInt(bid)]),
-  sort(([handA], [handB]) => {
-    if (handStrengthWithJokers(handA) === handStrengthWithJokers(handB)) {
+const handStrengthWithJokers = pipe(
+  split(''),
+  count,
+  Object.entries,
+  divideWether(pipe(start, eq('J'))),
+  map(map(end)),
+  ([jokers, rest]) =>
+    rest.length
+      ? exec(
+          rest,
+          sort(desc),
+          map((v, i) => (i === 0 ? v + (jokers[0] ?? 0) : v))
+        )
+      : jokers,
+  handType
+);
+
+const comparator =
+  (handStrengthFunc, cardList) =>
+  ([handA], [handB]) => {
+    if (handStrengthFunc(handA) === handStrengthFunc(handB)) {
       for (let i = 0; i < handA.length; i++) {
-        const aOrder = cardsWithJoker.findIndex((c) => c === handA[i]);
-        const bOrder = cardsWithJoker.findIndex((c) => c === handB[i]);
+        const aOrder = cardList.findIndex((c) => c === handA[i]);
+        const bOrder = cardList.findIndex((c) => c === handB[i]);
         if (aOrder === bOrder) continue;
 
         return aOrder - bOrder;
@@ -128,8 +98,25 @@ const second = pipe(
       return 0;
     }
 
-    return handStrengthWithJokers(handA) - handStrengthWithJokers(handB);
-  }),
+    return handStrengthFunc(handA) - handStrengthFunc(handB);
+  };
+
+const parseInput = pipe(
+  split('\n'),
+  map(split(' ')),
+  map(([hand, bid]) => [hand, toInt(bid)])
+);
+
+const first = pipe(
+  parseInput,
+  sort(comparator(handStrength, cards)),
+  map(([hand, bid], i) => bid * (i + 1)),
+  sum
+);
+
+const second = pipe(
+  parseInput,
+  sort(comparator(handStrengthWithJokers, cardsWithJoker)),
   map(([hand, bid], i) => bid * (i + 1)),
   sum
 );
