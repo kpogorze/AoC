@@ -1,3 +1,4 @@
+// @ts-nocheck
 /*
   Consider adding:
   - some/every equivalent
@@ -18,14 +19,14 @@ export const pipe = (...functions) =>
 export const exec = (arg, ...functions) =>
   functions.reduce((result, func) => func(result), arg);
 
-export const curry = (func) =>
+const curry = (func) =>
   function curried(...args) {
     return args.length < func.length
       ? curried.bind(null, ...args)
       : func.apply(null, args);
   };
 
-export const curryN = (arity, func) =>
+const curryN = (arity, func) =>
   function curried(...args) {
     return args.length < arity
       ? curried.bind(null, ...args)
