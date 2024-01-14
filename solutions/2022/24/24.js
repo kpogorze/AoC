@@ -1,13 +1,4 @@
-import {
-  reduce,
-  translate,
-  sequence,
-  lcm,
-  pipe,
-  split,
-  map,
-  log,
-} from '../../../utils.js';
+import { reduce, translate, sequence, lcm, pipe, split, map, log } from 'utils';
 
 const directions = [
   [0, 1], // right

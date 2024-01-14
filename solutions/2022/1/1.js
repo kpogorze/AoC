@@ -8,7 +8,7 @@ import {
   sum,
   take,
   toInt,
-} from '../../../utils.js';
+} from 'utils';
 
 const first = pipe(
   split('\n\n'),

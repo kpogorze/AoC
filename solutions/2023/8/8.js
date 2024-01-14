@@ -1,4 +1,4 @@
-import { lcm, pipe, reduce, split } from '../../../utils.js';
+import { lcm, pipe, reduce, split } from 'utils';
 
 const first = pipe(
   split('\n\n'),

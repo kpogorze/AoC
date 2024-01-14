@@ -1,4 +1,4 @@
-import { map, pipe, split, splitByLine, sum, toInt } from '../../../utils.js';
+import { map, pipe, split, splitByLine, sum, toInt } from 'utils';
 
 const first = pipe(
   splitByLine,

@@ -1,4 +1,4 @@
-import { map, pairwise, pipe, sequence, split, sum } from '../../../utils.js';
+import { map, pairwise, pipe, sequence, split, sum } from 'utils';
 
 const countReflections = (grid) =>
   sum(

@@ -1,4 +1,4 @@
-import { map, pairwise, pipe, split, sum, toInts } from '../../../utils.js';
+import { map, pairwise, pipe, split, sum, toInts } from 'utils';
 
 const first = pipe(
   split('\n'),

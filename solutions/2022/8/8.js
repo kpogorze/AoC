@@ -1,4 +1,4 @@
-import { log, map, pipe, split, splitByLine, toInt } from '../../../utils.js';
+import { log, map, pipe, split, splitByLine, toInt } from 'utils';
 
 const first = pipe(splitByLine, map(split('')), map(map(toInt)), (grid) => {
   let totalVisible = 0;

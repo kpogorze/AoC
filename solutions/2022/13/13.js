@@ -1,4 +1,4 @@
-import { map, pipe, sort, split, splitByLine, sum } from '../../../utils.js';
+import { map, pipe, sort, split, splitByLine, sum } from 'utils';
 
 const compare = (left, right) => {
   const max = Math.max(left.length, right.length);

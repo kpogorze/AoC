@@ -17,7 +17,7 @@ import {
   start,
   toInts,
   union,
-} from './utils.js';
+} from 'utils';
 
 const parseInput = pipe(
   split('\n\n'),

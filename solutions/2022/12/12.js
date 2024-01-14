@@ -1,12 +1,4 @@
-import {
-  asc,
-  log,
-  map,
-  pipe,
-  sort,
-  split,
-  splitByLine,
-} from '../../../utils.js';
+import { asc, log, map, pipe, sort, split, splitByLine } from 'utils';
 
 const S = [20, 0];
 const E = [20, 139];

@@ -1,13 +1,4 @@
-import {
-  filter,
-  join,
-  map,
-  negate,
-  pipe,
-  split,
-  sum,
-  toInt,
-} from '../../../utils.js';
+import { filter, join, map, negate, pipe, split, sum, toInt } from 'utils';
 
 const first = pipe(
   split('\n'),

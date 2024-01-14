@@ -1,4 +1,4 @@
-import { filter, invoke, map, pipe, split, toInts } from '../../../utils.js';
+import { filter, invoke, map, pipe, split, toInts } from 'utils';
 
 const low = 200000000000000;
 const high = 400000000000000;

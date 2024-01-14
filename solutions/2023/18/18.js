@@ -10,7 +10,7 @@ import {
   split,
   sum,
   translate,
-} from '../../../utils.js';
+} from 'utils';
 
 const directions = {
   R: [0, 1],

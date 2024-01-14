@@ -1,4 +1,4 @@
-import { map, pipe, split, splitByLine, sum } from '../../../utils.js';
+import { map, pipe, split, splitByLine, sum } from 'utils';
 
 const splitEvery = (n) => (arr) => {
   let res = [],

@@ -1,13 +1,4 @@
-import {
-  desc,
-  log,
-  map,
-  pipe,
-  sort,
-  split,
-  splitByLine,
-  toInt,
-} from '../../../utils.js';
+import { desc, log, map, pipe, sort, split, splitByLine, toInt } from 'utils';
 
 const takeLast = (arr) => arr[arr.length - 1];
 

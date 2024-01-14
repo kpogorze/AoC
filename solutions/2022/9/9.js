@@ -1,4 +1,4 @@
-import { map, pipe, split, splitByLine } from '../../../utils.js';
+import { map, pipe, split, splitByLine } from 'utils';
 
 const first = pipe(splitByLine, map(split(' ')), (arr) => {
   let hx = 0,

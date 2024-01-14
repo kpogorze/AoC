@@ -8,7 +8,7 @@ import {
   sum,
   toInt,
   toInts,
-} from '../../../utils.js';
+} from 'utils';
 
 const input = await fetch('./input.txt').then((response) => response.text());
 

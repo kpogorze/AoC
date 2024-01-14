@@ -7,7 +7,7 @@ import {
   sequence,
   sum,
   translate,
-} from '../../../utils.js';
+} from 'utils';
 
 const directions = [
   [0, 1], // right

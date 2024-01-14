@@ -1,12 +1,4 @@
-import {
-  map,
-  parseGrid,
-  pipe,
-  sequence,
-  reverse,
-  sum,
-  transpose,
-} from '../../../utils.js';
+import { map, parseGrid, pipe, sequence, reverse, sum, transpose } from 'utils';
 
 const calculateScore = pipe(
   transpose,

@@ -12,7 +12,7 @@ import {
   spreadGrid,
   sum,
   toInt,
-} from '../../../utils.js';
+} from 'utils';
 
 const parseInput = pipe(parseGrid, (grid) => {
   const numbers = grid.flatMap((row, x) =>
