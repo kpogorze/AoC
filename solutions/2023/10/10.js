@@ -1,12 +1,4 @@
-import {
-  filter,
-  log,
-  map,
-  max,
-  pipe,
-  split,
-  translate,
-} from '../../../utils.js';
+import { filter, log, map, max, pipe, split, translate } from 'utils';
 
 const directions = {
   east: [0, 1],

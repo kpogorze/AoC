@@ -1,4 +1,4 @@
-import { copy, map, pipe, split, sum } from '../../../utils.js';
+import { copy, map, pipe, split, sum } from 'utils';
 
 const emptyRow = () => Array(7).fill('.');
 

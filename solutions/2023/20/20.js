@@ -1,12 +1,4 @@
-import {
-  count,
-  map,
-  mapObject,
-  pairwise,
-  pipe,
-  sequence,
-  split,
-} from '../../../utils.js';
+import { count, map, mapObject, pairwise, pipe, sequence, split } from 'utils';
 
 const first = pipe(
   split('\n'),

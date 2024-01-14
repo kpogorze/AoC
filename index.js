@@ -62,7 +62,7 @@ import {
   transpose,
   union,
   zip,
-} from './utils.js';
+} from 'utils';
 
 const input = await fetch('./input.txt').then((response) => response.text());
 

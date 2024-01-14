@@ -9,7 +9,7 @@ import {
   rotate,
   split,
   translate,
-} from '../../../utils.js';
+} from 'utils';
 
 const directions = {
   NW: [-1, -1],

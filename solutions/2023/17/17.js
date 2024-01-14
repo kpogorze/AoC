@@ -1,13 +1,4 @@
-import {
-  log,
-  map,
-  min,
-  parseGrid,
-  pick,
-  pipe,
-  toInt,
-  translate,
-} from '../../../utils.js';
+import { log, map, min, parseGrid, pick, pipe, toInt, translate } from 'utils';
 
 const directions = {
   east: [0, 1],

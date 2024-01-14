@@ -1,4 +1,4 @@
-import { count, map, multiply, pipe, split } from '../../../utils.js';
+import { count, map, multiply, pipe, split } from 'utils';
 
 // solved by hand lol
 // TODO: try solutions to find them

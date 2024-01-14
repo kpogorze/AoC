@@ -1,4 +1,4 @@
-import { log, map, pipe, split, toInt } from '../../../utils.js';
+import { log, map, pipe, split, toInt } from 'utils';
 
 const getRockTiles = pipe(
   split('\n'),

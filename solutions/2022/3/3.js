@@ -1,4 +1,4 @@
-import { count, map, pipe, split, splitByLine, sum } from '../../../utils.js';
+import { count, map, pipe, split, splitByLine, sum } from 'utils';
 
 const toValues = (ch) => {
   if (ch >= 'a' && ch <= 'z') return ch.charCodeAt(0) - 'a'.charCodeAt(0) + 1;

@@ -1,4 +1,4 @@
-import { map, pipe, sequence, split, sum, toInts } from '../../../utils.js';
+import { map, pipe, sequence, split, sum, toInts } from 'utils';
 
 const memoize = (fn) => {
   let hit = 0,

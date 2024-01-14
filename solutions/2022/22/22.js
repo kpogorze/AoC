@@ -10,7 +10,7 @@ import {
   toInts,
   translate,
   zip,
-} from '../../../utils.js';
+} from 'utils';
 
 const RIGHT = 0,
   DOWN = 1,

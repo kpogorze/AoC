@@ -9,7 +9,7 @@ import {
   toInt,
   toInts,
   zip,
-} from '../../../utils.js';
+} from 'utils';
 
 const first = pipe(
   split('\n'),

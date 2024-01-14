@@ -1,13 +1,4 @@
-import {
-  pipe,
-  split,
-  map,
-  toInt,
-  reverse,
-  sum,
-  join,
-  log,
-} from '../../../utils.js';
+import { pipe, split, map, toInt, reverse, sum, join, log } from 'utils';
 
 const snafuToDec = pipe(
   split(''),

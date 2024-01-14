@@ -4,10 +4,11 @@ import {
   multiply,
   pick,
   pipe,
+  reduce,
   split,
   sum,
   toInts,
-} from '../../../utils.js';
+} from 'utils';
 
 const countMaxCubes = reduce(
   {

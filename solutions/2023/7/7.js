@@ -16,7 +16,7 @@ import {
   start,
   sum,
   toInt,
-} from '../../../utils.js';
+} from 'utils';
 
 const cards = [
   'A',

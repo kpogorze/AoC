@@ -1,13 +1,4 @@
-import {
-  divideWether,
-  map,
-  pipe,
-  sort,
-  split,
-  sum,
-  toInts,
-  zip,
-} from '../../../utils.js';
+import { divideWether, map, pipe, sort, split, sum, toInts, zip } from 'utils';
 
 const first = pipe(
   split('\n'),

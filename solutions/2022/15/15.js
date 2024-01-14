@@ -1,4 +1,4 @@
-import { map, pipe, split, toInt } from '../../../utils.js';
+import { map, pipe, split, toInt } from 'utils';
 
 const rowToCheck = 2000000;
 

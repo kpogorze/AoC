@@ -1,13 +1,4 @@
-import {
-  map,
-  multiply,
-  pipe,
-  sequence,
-  split,
-  sum,
-  take,
-  toInts,
-} from '../../../utils.js';
+import { map, multiply, pipe, sequence, split, sum, take, toInts } from 'utils';
 
 const parseInput = pipe(split('\n'), map(toInts));
 

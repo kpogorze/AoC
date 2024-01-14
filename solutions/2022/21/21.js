@@ -1,4 +1,4 @@
-import { pipe, split, map, toInt } from '../../../utils.js';
+import { pipe, split, map, toInt } from 'utils';
 
 const parseInput = pipe(
   split('\n'),

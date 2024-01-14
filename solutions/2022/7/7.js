@@ -9,7 +9,7 @@ import {
   split,
   splitByLine,
   sum,
-} from '../../../utils.js';
+} from 'utils';
 
 const dirSizes = pipe(
   splitByLine,

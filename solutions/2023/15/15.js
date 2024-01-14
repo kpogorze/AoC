@@ -1,4 +1,4 @@
-import { map, pipe, sequence, reduce, split, sum } from '../../../utils.js';
+import { map, pipe, sequence, reduce, split, sum } from 'utils';
 
 const calculateHash = reduce(
   0,
