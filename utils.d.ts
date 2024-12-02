@@ -104,28 +104,52 @@ export function pipe<
   f8: Unary<F7, F8>,
   f9: Unary<F8, F9>
 ): Unary<T, F9>;
+export function pipe<
+  const T,
+  const F1,
+  const F2,
+  const F3,
+  const F4,
+  const F5,
+  const F6,
+  const F7,
+  const F8,
+  const F9,
+  const F10
+>(
+  f1: Unary<T, F1>,
+  f2: Unary<F1, F2>,
+  f3: Unary<F2, F3>,
+  f4: Unary<F3, F4>,
+  f5: Unary<F4, F5>,
+  f6: Unary<F5, F6>,
+  f7: Unary<F6, F7>,
+  f8: Unary<F7, F8>,
+  f9: Unary<F8, F9>,
+  f10: Unary<F9, F10>
+): Unary<T, F10>;
 
-export function exec<T>(arg: T): T;
-export function exec<T, F1>(arg: T, f1: Unary<T, F1>): F1;
-export function exec<T, F1, F2>(
+export function exec<const T>(arg: T): T;
+export function exec<const T, const F1>(arg: T, f1: Unary<T, F1>): F1;
+export function exec<const T, const F1, const F2>(
   arg: T,
   f1: Unary<T, F1>,
   f2: Unary<F1, F2>
 ): F2;
-export function exec<T, F1, F2, F3>(
+export function exec<const T, const F1, const F2, const F3>(
   arg: T,
   f1: Unary<T, F1>,
   f2: Unary<F1, F2>,
   f3: Unary<F2, F3>
 ): F3;
-export function exec<T, F1, F2, F3, F4>(
+export function exec<const T, const F1, const F2, const F3, const F4>(
   arg: T,
   f1: Unary<T, F1>,
   f2: Unary<F1, F2>,
   f3: Unary<F2, F3>,
   f4: Unary<F3, F4>
 ): F4;
-export function exec<T, F1, F2, F3, F4, F5>(
+export function exec<const T, const F1, const F2, const F3, const F4, const F5>(
   arg: T,
   f1: Unary<T, F1>,
   f2: Unary<F1, F2>,
@@ -133,7 +157,15 @@ export function exec<T, F1, F2, F3, F4, F5>(
   f4: Unary<F3, F4>,
   f5: Unary<F4, F5>
 ): F5;
-export function exec<T, F1, F2, F3, F4, F5, F6>(
+export function exec<
+  const T,
+  const F1,
+  const F2,
+  const F3,
+  const F4,
+  const F5,
+  const F6
+>(
   arg: T,
   f1: Unary<T, F1>,
   f2: Unary<F1, F2>,
@@ -142,7 +174,16 @@ export function exec<T, F1, F2, F3, F4, F5, F6>(
   f5: Unary<F4, F5>,
   f6: Unary<F5, F6>
 ): F6;
-export function exec<T, F1, F2, F3, F4, F5, F6, F7>(
+export function exec<
+  const T,
+  const F1,
+  const F2,
+  const F3,
+  const F4,
+  const F5,
+  const F6,
+  const F7
+>(
   arg: T,
   f1: Unary<T, F1>,
   f2: Unary<F1, F2>,
@@ -152,7 +193,17 @@ export function exec<T, F1, F2, F3, F4, F5, F6, F7>(
   f6: Unary<F5, F6>,
   f7: Unary<F6, F7>
 ): F7;
-export function exec<T, F1, F2, F3, F4, F5, F6, F7, F8>(
+export function exec<
+  const T,
+  const F1,
+  const F2,
+  const F3,
+  const F4,
+  const F5,
+  const F6,
+  const F7,
+  const F8
+>(
   arg: T,
   f1: Unary<T, F1>,
   f2: Unary<F1, F2>,
@@ -163,7 +214,18 @@ export function exec<T, F1, F2, F3, F4, F5, F6, F7, F8>(
   f7: Unary<F6, F7>,
   f8: Unary<F7, F8>
 ): F8;
-export function exec<T, F1, F2, F3, F4, F5, F6, F7, F8, F9>(
+export function exec<
+  const T,
+  const F1,
+  const F2,
+  const F3,
+  const F4,
+  const F5,
+  const F6,
+  const F7,
+  const F8,
+  const F9
+>(
   arg: T,
   f1: Unary<T, F1>,
   f2: Unary<F1, F2>,
@@ -175,6 +237,31 @@ export function exec<T, F1, F2, F3, F4, F5, F6, F7, F8, F9>(
   f8: Unary<F7, F8>,
   f9: Unary<F8, F9>
 ): F9;
+export function exec<
+  const T,
+  const F1,
+  const F2,
+  const F3,
+  const F4,
+  const F5,
+  const F6,
+  const F7,
+  const F8,
+  const F9,
+  const F10
+>(
+  arg: T,
+  f1: Unary<T, F1>,
+  f2: Unary<F1, F2>,
+  f3: Unary<F2, F3>,
+  f4: Unary<F3, F4>,
+  f5: Unary<F4, F5>,
+  f6: Unary<F5, F6>,
+  f7: Unary<F6, F7>,
+  f8: Unary<F7, F8>,
+  f9: Unary<F8, F9>,
+  f10: Unary<F9, F10>
+): F10;
 
 export function apply<F extends (...args: readonly any[]) => any>(
   func: F
@@ -184,26 +271,33 @@ export function call(
   ...args: readonly any[]
 ): <F extends (...args: readonly any[]) => any>(func: F) => ReturnType<F>;
 
-export function invoke<Key extends string>(
+export function invoke<const T, Key extends keyof T>(
   methodName: Key,
-  ...args: readonly any[]
-): <Obj extends object>(obj: Obj) => ReturnType<Obj[Key]>;
+  ...args: readonly Parameters<T[Key]>
+): (obj: T) => ReturnType<T[Key]>;
 
 export function negate<F extends (...args: readonly any[]) => boolean>(
   func: F
 ): F;
 
-export function pluck<Prop extends string>(
+export function pluck<const T, Prop extends keyof T>(
   prop: Prop
-): <Obj extends object>(obj: Obj) => Obj[Prop];
+): (obj: T) => T[Prop];
 
 export const log: typeof I;
 
 export const copy: typeof I;
 
-export const mapObject;
+export function mapObject<
+  const TK extends string,
+  const T,
+  const UK extends string,
+  const U
+>(
+  mapfn: (arg: [TK, T]) => readonly [UK, U]
+): (obj: Record<TK, T>) => Record<UK, U>;
 
-export function eq<T>(a: T): (b: T) => boolean;
+export function eq<const T>(a: T): (b: T) => boolean;
 
 export function join(char: string): (arr: readonly any[]) => string;
 
@@ -213,7 +307,7 @@ export function splitByLine(str: string): readonly string[];
 
 export function splitEvery(
   n: number
-): <T extends readonly any[]>(arr: T) => readonly T[];
+): <const T extends readonly any[]>(arr: T) => readonly T[];
 
 export function sort<T>(
   compFunc: (a: T, b: T) => number
@@ -241,7 +335,7 @@ export function filter<const T>(
   func: (el: T, index: number, arr: ReadonlyArray<T>) => boolean
 ): (arr: ReadonlyArray<T>) => ReadonlyArray<T>;
 
-export function reduce<T, Acc>(
+export function reduce<T, const Acc>(
   init: Acc,
   reducer: (acc: Acc, curr: T, index: number) => Acc
 ): (arr: ReadonlyArray<T>) => Acc;
