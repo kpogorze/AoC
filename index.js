@@ -19,6 +19,7 @@ import {
   getAllNeighbors,
   getPointValue,
   getStrictNeighbors,
+  I,
   intersection,
   invoke,
   join,
@@ -66,16 +67,20 @@ import {
 
 const input = await fetch('./input.txt').then((response) => response.text());
 
-const before = performance.now();
-
-const parseInput = pipe(split(''));
+const parseInput = pipe(split('\n'));
 
 const first = pipe(parseInput);
 
 const second = pipe(parseInput);
 
-pipe(first, log)(input);
+let before = performance.now();
 
-pipe(second, log)(input);
+exec(input, first, log);
 
-console.log('Took', performance.now() - before);
+console.log('Part 1 took', performance.now() - before);
+
+before = performance.now();
+
+exec(input, second, log);
+
+console.log('Part 2 took', performance.now() - before);
