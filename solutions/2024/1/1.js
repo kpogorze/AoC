@@ -2,13 +2,17 @@ import {
   apply,
   asc,
   count,
-  log,
+  end,
   map,
+  mapFn,
   pipe,
   sort,
   split,
+  start,
+  sub,
   sum,
   toInts,
+  transpose,
   zip,
 } from 'utils';
 
@@ -16,16 +20,16 @@ const parseInput = pipe(split('\n'), map(toInts));
 
 const first = pipe(
   parseInput,
-  (a) => [a.map((n) => n[0]), a.map((n) => n[1])],
+  transpose,
   map(sort(asc)),
   apply(zip),
-  map((a) => Math.abs(a[0] - a[1])),
+  map(pipe(apply(sub), Math.abs)),
   sum
 );
 
 const second = pipe(
   parseInput,
-  (a) => [a.map((n) => n[0]), count(a.map((n) => n[1]))],
+  mapFn([map(start), pipe(map(end), count)]),
   (a) => a[0].map((k) => k * (a[1][k] ?? 0)),
   sum
 );
