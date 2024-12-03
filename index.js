@@ -1,93 +1,41 @@
-import {
-  add,
-  allNeighborDirs,
-  apply,
-  asc,
-  call,
-  cartesian,
-  copy,
-  count,
-  desc,
-  difference,
-  divideWether,
-  end,
-  enumerate,
-  eq,
-  exec,
-  filter,
-  find,
-  flatMap,
-  flatten,
-  flip,
-  gcd,
-  getAllNeighbors,
-  getPointValue,
-  getStrictNeighbors,
-  I,
-  intersection,
-  invoke,
-  join,
-  K,
-  lcm,
-  log,
-  map,
-  mapFn,
-  mapObject,
-  match,
-  max,
-  min,
-  mul,
-  multiply,
-  negate,
-  orElse,
-  pairwise,
-  parseGrid,
-  pick,
-  pipe,
-  pluck,
-  priorityQueue,
-  range,
-  reduce,
-  reverse,
-  rotate,
-  scan,
-  sequence,
-  shift,
-  sort,
-  split,
-  splitByLine,
-  splitEvery,
-  spreadGrid,
-  start,
-  strictNeighborDirs,
-  sub,
-  sum,
-  symmetricDifference,
-  take,
-  toInt,
-  toInts,
-  translate,
-  transpose,
-  union,
-  zip,
-} from 'utils';
+import { pipe } from 'utils';
+import { exec, log } from 'utils';
 
-const input = await fetch('./input.txt').then((response) => response.text());
+const params = new URLSearchParams(window.location.search);
 
-const parseInput = pipe(split('\n'));
+const year = params.get('year');
+const day = params.get('day');
+const solutionPrefix = year && day ? `./solutions/${year}/${day}/` : './';
 
-const first = pipe(parseInput);
+document.querySelector('iframe').addEventListener(
+  'load',
+  async () => {
+    const input = await fetch(`${solutionPrefix}input.txt`).then((response) =>
+      response.text()
+    );
+    const solutionModule = await import(`${solutionPrefix}solution.js`);
 
-const second = pipe(parseInput);
+    const parseInput = solutionModule.parseInput ?? pipe();
 
-let before = performance.now();
+    const first = solutionModule.first ?? pipe();
 
-exec(input, first, log);
+    const second = solutionModule.second ?? pipe();
 
-console.log('Part 1 took', performance.now() - before);
+    setTimeout(() => {
+      const before = performance.now();
 
-before = performance.now();
+      exec(input, parseInput, first, log);
 
-exec(input, second, log);
+      console.log('Part 1 took', performance.now() - before);
+    });
 
-console.log('Part 2 took', performance.now() - before);
+    setTimeout(() => {
+      const before = performance.now();
+
+      exec(input, parseInput, second, log);
+
+      console.log('Part 2 took', performance.now() - before);
+    });
+  },
+  { once: true }
+);
