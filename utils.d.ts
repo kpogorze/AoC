@@ -1,3 +1,5 @@
+/*---------------------------------- FUNCTIONS ----------------------------------*/
+
 type Unary<const Arg, const Ret> = (arg: Arg) => Ret;
 
 export function I<const T>(arg: T): T;
@@ -263,9 +265,9 @@ export function exec<
   f10: Unary<F9, F10>
 ): F10;
 
-export function apply<F extends (...args: readonly any[]) => any>(
+export function apply<const F extends (...args: readonly any[]) => any>(
   func: F
-): (args: Parameters<F>) => ReturnType<F>;
+): (args: Readonly<Parameters<F>>) => ReturnType<F>;
 
 export function call(
   ...args: readonly any[]
@@ -279,6 +281,20 @@ export function invoke<const T, Key extends keyof T>(
 export function negate<F extends (...args: readonly any[]) => boolean>(
   func: F
 ): F;
+
+export function mapFn<const T, const Fns extends Unary<T, any>[]>(
+  funcList: Fns
+): (arg: T) => { [K in keyof Fns]: ReturnType<Fns[K]> };
+
+export function flip<const T, const U, const V>(
+  f: (a: T) => (b: U) => V,
+  b: U
+): (a: T) => V;
+export function flip<const T, const U, const V>(
+  f: (a: T) => (b: U) => V
+): (b: U) => (a: T) => V;
+
+/*---------------------------------- OBJECT ----------------------------------*/
 
 export function pluck<const T, Prop extends keyof T>(
   prop: Prop
@@ -298,6 +314,8 @@ export function mapObject<
 ): (obj: Record<TK, T>) => Record<UK, U>;
 
 export function eq<const T>(a: T): (b: T) => boolean;
+
+/*---------------------------------- COLLECTIONS ----------------------------------*/
 
 export function join(char: string): (arr: readonly any[]) => string;
 
@@ -375,10 +393,20 @@ export function divideWether<T>(
 export function zip<T, U>(
   a: ReadonlyArray<T>,
   b: ReadonlyArray<U>
-): ReadonlyArray<[T, U]>;
+): ReadonlyArray<readonly [T, U]>;
 export function zip<T, U>(
   a: ReadonlyArray<T>
-): (b: ReadonlyArray<U>) => ReadonlyArray<[T, U]>;
+): (b: ReadonlyArray<U>) => ReadonlyArray<readonly [T, U]>;
+
+/*---------------------------------- MATH ----------------------------------*/
+
+export function add(a: number, b: number): number;
+
+export function mul(a: number, b: number): number;
+
+export function sub(a: number, b: number): number;
+
+export function div(a: number, b: number): number;
 
 export function sum(arr: readonly number[]): number;
 
@@ -401,6 +429,16 @@ export function cartesian<T, U>(
   b: ReadonlyArray<U>
 ): ReadonlyArray<[T, U]>;
 
+/*---------------------------------- LOGIC ----------------------------------*/
+
+export function or(a: boolean, b: boolean): boolean;
+
+export function and(a: boolean, b: boolean): boolean;
+
+export function some(a: readonly boolean[]): boolean;
+
+export function every(a: readonly boolean[]): boolean;
+
 export function orElse<U>(
   def: U
 ): <T>(val: T) => T extends NonNullable<T> ? T : U;
@@ -408,6 +446,8 @@ export function orElse<U>(
 export function match<T, U>(
   rules: readonly [Unary<T, boolean>, Unary<T, U>][]
 ): (val: T) => U | null;
+
+/*---------------------------------- RANGES ----------------------------------*/
 
 export function sequence(from: number, to: number): readonly number[];
 export function sequence(from: number): (to: number) => readonly number[];
@@ -429,6 +469,8 @@ export function symmetricDifference(a: RangeSet, b: RangeSet): RangeSet;
 export function enumerate(r: RangeSet): readonly number[];
 
 export function shift(n: number): (r: RangeSet) => RangeSet;
+
+/*---------------------------------- GRID ----------------------------------*/
 
 type Grid<T> = readonly (readonly T[])[];
 
@@ -453,6 +495,8 @@ export function getAllNeighbors(point: Point2D): readonly Point2D[];
 export const strictNeighborDirs: readonly Point2D[];
 
 export function getStrictNeighbors(point: Point2D): readonly Point2D[];
+
+/*---------------------------------- DS&A ----------------------------------*/
 
 type PriorityQueue<T> = {
   add(val: [T, number]): void;

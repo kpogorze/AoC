@@ -1,10 +1,7 @@
 // @ts-nocheck
 /*
   Consider adding:
-  - some/every equivalent
-  - splitEvery
   - switch/if-else replacement
-  - orElse
   - unique
 */
 
@@ -49,6 +46,10 @@ export const negate =
   (func) =>
   (...args) =>
     !func(...args);
+
+export const flip = curry((f, a, b) => f(b, a));
+
+export const mapFn = curry((funcList, arg) => flip(map, funcList, call(arg)));
 
 /*---------------------------------- OBJECT ----------------------------------*/
 
@@ -155,9 +156,17 @@ export const zip = curry((a, b) => a.map((aElem, i) => [aElem, b[i]]));
 
 /*---------------------------------- MATH ----------------------------------*/
 
-export const sum = scan((sum, curr) => sum + curr);
+export const add = curry((a, b) => a + b);
 
-export const multiply = scan((product, curr) => product * curr);
+export const mul = curry((a, b) => a * b);
+
+export const sub = curry((a, b) => a - b);
+
+export const div = curry((a, b) => a / b);
+
+export const sum = scan(add);
+
+export const multiply = scan(mul);
 
 export const max = apply(Math.max);
 
@@ -177,7 +186,15 @@ export const lcm = (a, b) => (a * b) / gcd(a, b);
 
 export const cartesian = (a, b) => a.flatMap((ai) => b.map((bi) => [ai, bi]));
 
-/*---------------------------------- GENERAL ----------------------------------*/
+/*---------------------------------- LOGIC ----------------------------------*/
+
+export const or = curry((a, b) => a || b);
+
+export const and = curry((a, b) => a && b);
+
+export const some = scan(or);
+
+export const every = scan(and);
 
 export const orElse = curry((def, val) => val ?? def);
 
