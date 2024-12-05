@@ -435,9 +435,13 @@ export function or(a: boolean, b: boolean): boolean;
 
 export function and(a: boolean, b: boolean): boolean;
 
-export function some(a: readonly boolean[]): boolean;
+export function some<const T>(
+  fn: Unary<T, boolean>
+): (arr: readonly T[]) => boolean;
 
-export function every(a: readonly boolean[]): boolean;
+export function every<const T>(
+  fn: Unary<T, boolean>
+): (arr: readonly T[]) => boolean;
 
 export function orElse<U>(
   def: U

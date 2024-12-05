@@ -192,9 +192,9 @@ export const or = curry((a, b) => a || b);
 
 export const and = curry((a, b) => a && b);
 
-export const some = scan(or);
+export const some = curry((func, arr) => arr.some(func));
 
-export const every = scan(and);
+export const every = curry((func, arr) => arr.every(func));
 
 export const orElse = curry((def, val) => val ?? def);
 
