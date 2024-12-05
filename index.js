@@ -1,4 +1,3 @@
-import { pipe } from 'utils';
 import { exec, log } from 'utils';
 
 const params = new URLSearchParams(window.location.search);
@@ -11,20 +10,21 @@ document.querySelector('iframe').addEventListener(
   'load',
   async () => {
     const input = await fetch(`${solutionPrefix}input.txt`).then((response) =>
-      response.text()
+      response.status === 200
+        ? response.text()
+        : fetch(`./input.txt`).then((res) => res.text())
     );
-    const solutionModule = await import(`${solutionPrefix}solution.js`);
-
-    const parseInput = solutionModule.parseInput ?? pipe();
-
-    const first = solutionModule.first ?? pipe();
-
-    const second = solutionModule.second ?? pipe();
+    const { first, second } = await import(
+      `${solutionPrefix}solution.js`
+    ).catch((err) => {
+      console.error(err);
+      return import('./solution.js');
+    });
 
     setTimeout(() => {
       const before = performance.now();
 
-      exec(input, parseInput, first, log);
+      exec(input, first, log);
 
       console.log('Part 1 took', performance.now() - before);
     });
@@ -32,7 +32,7 @@ document.querySelector('iframe').addEventListener(
     setTimeout(() => {
       const before = performance.now();
 
-      exec(input, parseInput, second, log);
+      exec(input, second, log);
 
       console.log('Part 2 took', performance.now() - before);
     });
