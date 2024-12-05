@@ -7,5 +7,6 @@
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
-  "prettier.singleQuote": true
+  "prettier.singleQuote": true,
+  "javascript.inlayHints.parameterNames.enabled": "none"
 }
