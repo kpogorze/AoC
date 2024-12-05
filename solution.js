@@ -13,6 +13,7 @@ import {
   end,
   enumerate,
   eq,
+  every,
   exec,
   filter,
   find,
@@ -39,6 +40,7 @@ import {
   mul,
   multiply,
   negate,
+  or,
   orElse,
   pairwise,
   parseGrid,
@@ -72,8 +74,8 @@ import {
   zip,
 } from 'utils';
 
-export const parseInput = pipe(splitByLine);
+const parseInput = pipe(splitByLine);
 
-export const first = pipe();
+export const first = pipe(parseInput);
 
-export const second = pipe();
+export const second = pipe(parseInput);
