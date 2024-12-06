@@ -1,146 +1,116 @@
 import {
-  add,
-  allNeighborDirs,
-  apply,
-  asc,
-  call,
-  cartesian,
-  copy,
-  count,
-  desc,
-  difference,
-  divideWether,
+  construct,
   end,
-  enumerate,
   eq,
-  every,
   exec,
   filter,
-  find,
-  flatMap,
-  flatten,
-  flip,
-  gcd,
-  getAllNeighbors,
-  getPointValue,
-  getStrictNeighbors,
-  I,
-  intersection,
+  hash,
   invoke,
-  join,
-  K,
-  lcm,
-  log,
   map,
   mapFn,
-  mapObject,
-  match,
-  max,
-  min,
   mul,
-  multiply,
-  negate,
-  or,
-  orElse,
-  pairwise,
   parseGrid,
-  pick,
   pipe,
-  pluck,
-  priorityQueue,
-  range,
-  reduce,
-  reverse,
-  rotate,
-  scan,
-  sequence,
-  shift,
-  sort,
-  split,
-  splitByLine,
-  splitEvery,
   spreadGrid,
   start,
   strictNeighborDirs,
-  sub,
-  sum,
-  symmetricDifference,
   take,
-  toInt,
+  toArray,
   toInts,
   translate,
-  transpose,
-  union,
-  zip,
+  traverse,
 } from 'utils';
 
 const parseInput = pipe(
   parseGrid,
   spreadGrid,
-  map(mapFn([pipe(start, join(',')), end])),
+  map(mapFn([pipe(start, hash), pipe(end)])),
   (el) => new Map(el)
 );
 
-export const first = pipe(parseInput, (grid) => {
-  const pos = [...grid.entries()].find((el) => el[1] === '^')[0];
-  let currPos = toInts(pos);
-  let currDir = 0;
+const findPath = traverse(
+  (grid) => {
+    const pos = toInts([...grid.entries()].find((el) => el[1] === '^')[0]);
+    return {
+      pos,
+      dir: 0,
+      visited: new Set([hash(pos, 0)]),
+      grid,
+    };
+  },
+  ({ pos, grid, visited }) => (!grid.get(hash(pos)) ? visited : null),
+  ({ pos, dir, visited, grid }) => {
+    const newPos = translate(pos)(strictNeighborDirs[dir % 4]);
+    const newField = grid.get(hash(newPos));
 
-  let visited = [currPos.join(',')];
-  while (true) {
-    const newPos = translate(currPos, strictNeighborDirs[currDir % 4]);
-    const newField = grid.get(newPos.join(','));
-    if (newField === '.' || newField === '^') {
-      currPos = newPos;
-      if (!visited.includes(newPos.join(','))) {
-        visited.push(newPos.join(','));
-      }
-    }
     if (newField === '#') {
-      currDir++;
+      return { pos, dir: dir + 1, visited, grid };
     }
-    if (newField === undefined) {
-      break;
+    if (newField === '.' || newField === '^') {
+      visited.add(hash(newPos, dir % 4));
     }
-  }
 
-  return visited.length;
-});
+    return {
+      pos: newPos,
+      dir,
+      visited,
+      grid,
+    };
+  }
+);
+export const first = pipe(
+  parseInput,
+  findPath,
+  invoke('values'),
+  toArray,
+  map(toInts),
+  map(take(2)),
+  map((el) => hash(el)),
+  construct(Set)
+);
 
 export const second = pipe(parseInput, (grid) =>
   exec(
-    grid.entries(),
-    Array.from,
-    filter(([pos, el]) => el === '.'),
-    filter(([pos, el]) => {
-      console.log(pos);
-      let newGrid = new Map(grid.entries());
-      newGrid.set(pos, '#');
-      let currPos = toInts(
-        [...newGrid.entries()].find((el) => el[1] === '^')[0]
+    grid,
+    findPath,
+    invoke('values'),
+    toArray,
+    map(toInts),
+    ([a, ...tail]) => tail,
+    filter(([x, y, dir], i, pathWithDirs) => {
+      const obstaclePos = [x, y];
+      let currPos = translate(
+        obstaclePos,
+        strictNeighborDirs[dir % 4].map(mul(-1))
       );
-      let currDir = 0;
+      let currDir = dir;
 
-      let visited = [[...currPos, currDir % 4].join(',')];
-      let newField = el;
-      while (newField) {
-        if (visited.length > 10000) {
-          break;
-        }
+      const cutoff = pathWithDirs.findIndex(pipe(take(2), eq(obstaclePos)));
+      if (cutoff !== i) {
+        return false;
+      }
+
+      let currPath = pathWithDirs.slice(0, i).map((el) => hash(el));
+      grid.set(hash(obstaclePos), '#');
+
+      while (grid.get(hash(currPos))) {
         const newPos = translate(currPos, strictNeighborDirs[currDir % 4]);
-        newField = newGrid.get(newPos.join(','));
+        const newField = grid.get(hash(newPos));
+        if (!newField) return false;
         if (newField === '.' || newField === '^') {
           currPos = newPos;
-          if (!visited.includes([...newPos, currDir % 4].join(','))) {
-            visited.push([...newPos, currDir % 4].join(','));
-          } else {
+          if (currPath.includes(hash(currPos, currDir % 4))) {
+            grid.set(hash(obstaclePos), '.');
             return true;
           }
+
+          currPath.push(hash(currPos, currDir % 4));
         }
         if (newField === '#') {
           currDir++;
         }
       }
+      grid.set(hash(obstaclePos), '.');
       return false;
     })
   )
