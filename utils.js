@@ -86,7 +86,14 @@ export const eq = curry((a, b) => {
   return a === b;
 });
 
+export const construct =
+  (cons) =>
+  (...args) =>
+    new cons(...args);
+
 /*---------------------------------- COLLECTIONS ----------------------------------*/
+
+export const toArray = Array.from;
 
 export const join = curry((char, arr) => arr.join(char));
 
@@ -153,6 +160,8 @@ export const divideWether = curry((func, arr) => [
 ]);
 
 export const zip = curry((a, b) => a.map((aElem, i) => [aElem, b[i]]));
+
+export const hash = (...args) => exec(args, flatten, join(','));
 
 /*---------------------------------- MATH ----------------------------------*/
 
@@ -335,6 +344,15 @@ export const strictNeighborDirs = [
 
 export const getStrictNeighbors = (point) =>
   strictNeighborDirs.map(translate(point));
+
+export const traverse = (initFn, stopCondition, transitionFn) => (input) => {
+  let currentState = initFn(input);
+  while (!stopCondition(currentState)) {
+    currentState = transitionFn(currentState);
+  }
+
+  return stopCondition(currentState);
+};
 
 /*---------------------------------- DS&A ----------------------------------*/
 

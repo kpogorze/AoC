@@ -315,9 +315,17 @@ export function mapObject<
 
 export function eq<const T>(a: T): (b: T) => boolean;
 
+export function construct<T extends new (...args: any) => any>(
+  cons: T
+): (...args: ConstructorParameters<T>) => InstanceType<T>;
+
 /*---------------------------------- COLLECTIONS ----------------------------------*/
 
-export function join(char: string): (arr: readonly any[]) => string;
+export function toArray<const T>(
+  arg: Iterable<T> | ArrayLike<T>
+): ReadonlyArray<T>;
+
+export function join<const T>(char: string): (arr: readonly T[]) => string;
 
 export function split(char: string): (str: string) => readonly string[];
 
@@ -368,9 +376,11 @@ export function take<T>(
 
 export function pick<T>(index: number): (arr: ReadonlyArray<T>) => T;
 
-export function start<T>(arr: ReadonlyArray<T>): T;
+export function start<const T extends any[]>(arr: T): T[0];
 
-export function end<T>(arr: ReadonlyArray<T>): T;
+type LastElementOf<const T> = T extends [...any[], infer U] ? U : never;
+
+export function end<const T>(arr: T): LastElementOf<T>;
 
 export function count<T extends string | number>(
   arr: ReadonlyArray<T>
@@ -397,6 +407,8 @@ export function zip<T, U>(
 export function zip<T, U>(
   a: ReadonlyArray<T>
 ): (b: ReadonlyArray<U>) => ReadonlyArray<readonly [T, U]>;
+
+export function hash<const T>(...arg: readonly T[]): string;
 
 /*---------------------------------- MATH ----------------------------------*/
 
@@ -485,6 +497,10 @@ export function getPointValue<T>(grid: Grid<T>): (pos: Point2D) => T;
 export function spreadGrid<T>(grid: Grid<T>): readonly [Point2D, T][];
 
 export function translate<const T extends readonly number[]>(
+  point: T,
+  delta: T
+): T;
+export function translate<const T extends readonly number[]>(
   point: T
 ): (delta: T) => T;
 
@@ -499,6 +515,12 @@ export function getAllNeighbors(point: Point2D): readonly Point2D[];
 export const strictNeighborDirs: readonly Point2D[];
 
 export function getStrictNeighbors(point: Point2D): readonly Point2D[];
+
+export function traverse<const T, U, const V>(
+  initFn: Unary<T, U>,
+  stopCondition: Unary<U, V | null>,
+  transitionFn: Unary<U, U>
+): (arg: T) => V;
 
 /*---------------------------------- DS&A ----------------------------------*/
 
