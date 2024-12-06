@@ -40,7 +40,7 @@ const findPath = traverse(
   },
   ({ pos, grid, visited }) => (!grid.get(hash(pos)) ? visited : null),
   ({ pos, dir, visited, grid }) => {
-    const newPos = translate(pos)(strictNeighborDirs[dir % 4]);
+    const newPos = translate(pos, strictNeighborDirs[dir % 4]);
     const newField = grid.get(hash(newPos));
 
     if (newField === '#') {
@@ -96,7 +96,11 @@ export const second = pipe(parseInput, (grid) =>
       while (grid.get(hash(currPos))) {
         const newPos = translate(currPos, strictNeighborDirs[currDir % 4]);
         const newField = grid.get(hash(newPos));
-        if (!newField) return false;
+        if (!newField) {
+          grid.set(hash(obstaclePos), '.');
+
+          return false;
+        }
         if (newField === '.' || newField === '^') {
           currPos = newPos;
           if (currPath.includes(hash(currPos, currDir % 4))) {
