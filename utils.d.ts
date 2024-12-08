@@ -410,6 +410,8 @@ export function zip<T, U>(
 
 export function hash<const T>(...arg: readonly T[]): string;
 
+export function unique<const T>(arr: readonly T[]): readonly T[];
+
 /*---------------------------------- MATH ----------------------------------*/
 
 export function add(a: number, b: number): number;

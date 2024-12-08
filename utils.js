@@ -163,6 +163,12 @@ export const zip = curry((a, b) => a.map((aElem, i) => [aElem, b[i]]));
 
 export const hash = (...args) => exec(args, flatten, join(','));
 
+export const unique = (arr) =>
+  arr.reduce(
+    (acc, curr) => (acc.every((el) => !eq(el, curr)) ? [...acc, curr] : acc),
+    []
+  );
+
 /*---------------------------------- MATH ----------------------------------*/
 
 export const add = curry((a, b) => a + b);
