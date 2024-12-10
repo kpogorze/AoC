@@ -101,9 +101,16 @@ export const split = curry((char, str) => str.split(char));
 
 export const splitByLine = split('\n');
 
-export const splitEvery = curry((n, arr) =>
-  arr.length <= n ? [arr] : [arr.slice(0, n), ...splitEvery(n, arr.slice(n))]
-);
+export const splitEvery = curry((n, arr) => {
+  let res = [];
+  let rest = arr;
+  do {
+    res.push(rest.slice(0, n));
+    rest = rest.slice(n);
+  } while (rest.length > 0);
+
+  return res;
+});
 
 export const sort = curry((compFunc, array) => array.toSorted(compFunc));
 
