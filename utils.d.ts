@@ -494,6 +494,7 @@ type Grid<T> = readonly (readonly T[])[];
 
 type Point2D = [number, number];
 
+export function getPointValue<T>(grid: Grid<T>, pos: Point2D): T;
 export function getPointValue<T>(grid: Grid<T>): (pos: Point2D) => T;
 
 export function spreadGrid<T>(grid: Grid<T>): readonly [Point2D, T][];
@@ -536,3 +537,19 @@ type PriorityQueue<T> = {
 export function priorityQueue<T>(
   initElements: readonly [T, number][]
 ): PriorityQueue<T>;
+
+export function bfs<const T, const U, const V>(
+  space: T,
+  starting: readonly U[],
+  stopCondition: (current: U, space: T) => V | null,
+  traversalFn: (current: U, space: T) => U[],
+  canBacktrack?: boolean
+): readonly V[];
+
+export function dfs<const T, const U, const V>(
+  space: T,
+  starting: readonly U[],
+  stopCondition: (current: U, space: T) => V | null,
+  traversalFn: (current: U, space: T) => U[],
+  canBacktrack?: boolean
+): readonly V[];

@@ -405,3 +405,69 @@ export const priorityQueue = (initElements) => {
     state,
   };
 };
+
+export const bfs = (
+  space,
+  starting,
+  stopCondition,
+  traversalFn,
+  canBacktrack = false
+) => {
+  const toCheck = [...starting];
+  const checked = [];
+  const retValue = [];
+
+  while (toCheck.length) {
+    const current = toCheck.shift();
+
+    if (!canBacktrack && checked.some(eq(current))) {
+      continue;
+    }
+
+    checked.push(current);
+
+    const shouldStop = stopCondition(current, space);
+
+    if (shouldStop != null) {
+      retValue.push(shouldStop);
+      continue;
+    }
+
+    traversalFn(current, space).forEach((el) => toCheck.push(el));
+  }
+
+  return retValue;
+};
+
+export const dfs = (
+  space,
+  starting,
+  stopCondition,
+  traversalFn,
+  canBacktrack = false
+) => {
+  const toCheck = [...starting];
+  const checked = [];
+  const retValue = [];
+
+  while (toCheck.length) {
+    const current = toCheck.pop();
+
+    if (!canBacktrack && checked.some(eq(current))) {
+      continue;
+    }
+
+    checked.push(current);
+
+    const shouldStop = stopCondition(current, space);
+
+    if (shouldStop != null) {
+      retValue.push(shouldStop);
+      continue;
+    }
+
+    traversalFn(current, space).forEach((el) => toCheck.push(el));
+  }
+
+  return retValue;
+};
