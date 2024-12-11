@@ -294,6 +294,8 @@ export function flip<const T, const U, const V>(
   f: (a: T) => (b: U) => V
 ): (b: U) => (a: T) => V;
 
+export const memoize: typeof I;
+
 /*---------------------------------- OBJECT ----------------------------------*/
 
 export function pluck<const T, Prop extends keyof T>(

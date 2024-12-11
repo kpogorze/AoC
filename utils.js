@@ -51,6 +51,22 @@ export const flip = curry((f, a, b) => f(b, a));
 
 export const mapFn = curry((funcList, arg) => flip(map, funcList, call(arg)));
 
+export const memoize = (fn) => {
+  const results = new Map();
+  return (...arg) => {
+    const hash = arg.toString();
+
+    if (results.has(hash)) {
+      return results.get(hash);
+    }
+
+    const res = fn(...arg);
+    results.set(hash, res);
+
+    return res;
+  };
+};
+
 /*---------------------------------- OBJECT ----------------------------------*/
 
 export const pluck = curry((prop, obj) => obj[prop]);

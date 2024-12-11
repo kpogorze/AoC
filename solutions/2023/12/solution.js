@@ -1,24 +1,4 @@
-import { map, pipe, sequence, split, sum, toInts } from 'utils';
-
-const memoize = (fn) => {
-  let hit = 0,
-    miss = 0;
-  const results = new Map();
-  return (...arg) => {
-    const hash = arg.toString();
-
-    if (results.has(hash)) {
-      hit++;
-      return results.get(hash);
-    }
-
-    miss++;
-    const res = fn(...arg);
-    results.set(hash, res);
-
-    return res;
-  };
-};
+import { map, memoize, pipe, sequence, split, sum, toInts } from 'utils';
 
 const countPossibilities = memoize(([gears, groups]) => {
   const currGear = gears[0];

@@ -1,24 +1,4 @@
-import { map, pipe, reduce, split, toInt } from 'utils';
-
-const memoize = (fn) => {
-  let hit = 0,
-    miss = 0;
-  const results = new Map();
-  return (...arg) => {
-    const hash = arg.toString();
-
-    if (results.has(hash)) {
-      hit++;
-      return results.get(hash);
-    }
-
-    miss++;
-    const res = fn(...arg);
-    results.set(hash, res);
-
-    return res;
-  };
-};
+import { map, memoize, pipe, reduce, split, toInt } from 'utils';
 
 const parseInput = pipe(
   split('\n'),
