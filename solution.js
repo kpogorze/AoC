@@ -38,6 +38,7 @@ import {
   mapObject,
   match,
   max,
+  memoize,
   min,
   mul,
   multiply,
@@ -75,6 +76,7 @@ import {
   transpose,
   traverse,
   union,
+  unique,
   zip,
 } from 'utils';
 
