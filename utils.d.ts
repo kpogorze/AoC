@@ -541,18 +541,19 @@ export function priorityQueue<T>(
   initElements: readonly [T, number][]
 ): PriorityQueue<T>;
 
+type SearchOptions<T, U, V = T> = {
+  toCheck: readonly T[];
+  stopCondition: (current: T) => U | null;
+  traversalFn: (current: T) => T[];
+  checkedFn?: (current: T) => V;
+  backtrackCheck?: (current: T, checkedEl: V) => boolean;
+  canBacktrack?: boolean;
+  returnFirst?: boolean;
+};
 export function bfs<const T, const U, const V>(
-  space: T,
-  starting: readonly U[],
-  stopCondition: (current: U, space: T) => V | null,
-  traversalFn: (current: U, space: T) => U[],
-  canBacktrack?: boolean
-): readonly V[];
+  options: SearchOptions<T, U, V>
+): readonly U[];
 
-export function dfs<const T, const U, const V>(
-  space: T,
-  starting: readonly U[],
-  stopCondition: (current: U, space: T) => V | null,
-  traversalFn: (current: U, space: T) => U[],
-  canBacktrack?: boolean
-): readonly V[];
+export function dfs<const T, const U>(
+  options: SearchOptions<T, V>
+): readonly U[];

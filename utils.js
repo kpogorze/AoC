@@ -422,67 +422,88 @@ export const priorityQueue = (initElements) => {
   };
 };
 
-export const bfs = (
-  space,
-  starting,
+export const bfs = ({
+  toCheck,
   stopCondition,
   traversalFn,
-  canBacktrack = false
-) => {
-  const toCheck = [...starting];
+  backtrackCheck,
+  checkedFn,
+  canBacktrack = false,
+  returnFirst = false,
+}) => {
+  debugger;
+  const checkList = [...toCheck];
   const checked = [];
   const retValue = [];
 
-  while (toCheck.length) {
-    const current = toCheck.shift();
+  while (checkList.length) {
+    const current = checkList.shift();
 
-    if (!canBacktrack && checked.some(eq(current))) {
+    if (
+      !canBacktrack &&
+      checked.some(
+        backtrackCheck ? (el) => backtrackCheck(current, el) : eq(current)
+      )
+    ) {
       continue;
     }
 
-    checked.push(current);
+    checked.push(checkedFn ? checkedFn(current) : current);
 
-    const shouldStop = stopCondition(current, space);
+    const shouldStop = stopCondition(current);
 
     if (shouldStop != null) {
+      if (returnFirst) {
+        return [shouldStop];
+      }
       retValue.push(shouldStop);
       continue;
     }
 
-    traversalFn(current, space).forEach((el) => toCheck.push(el));
+    traversalFn(current).forEach((el) => checkList.push(el));
   }
 
   return retValue;
 };
 
-export const dfs = (
-  space,
-  starting,
+export const dfs = ({
+  toCheck,
   stopCondition,
   traversalFn,
-  canBacktrack = false
-) => {
-  const toCheck = [...starting];
+  backtrackCheck,
+  checkedFn,
+  canBacktrack = false,
+  returnFirst = false,
+}) => {
+  const checklist = [...toCheck];
   const checked = [];
   const retValue = [];
 
-  while (toCheck.length) {
-    const current = toCheck.pop();
+  while (checklist.length) {
+    const current = checklist.pop();
 
-    if (!canBacktrack && checked.some(eq(current))) {
+    if (
+      !canBacktrack &&
+      checked.some(
+        backtrackCheck ? (el) => backtrackCheck(el, current) : eq(current)
+      )
+    ) {
       continue;
     }
 
-    checked.push(current);
+    checked.push(checkedFn ? checkedFn(current) : current);
 
-    const shouldStop = stopCondition(current, space);
+    const stopValue = stopCondition(current);
 
-    if (shouldStop != null) {
-      retValue.push(shouldStop);
+    if (stopValue != null) {
+      if (returnFirst) {
+        return [stopValue];
+      }
+      retValue.push(stopValue);
       continue;
     }
 
-    traversalFn(current, space).forEach((el) => toCheck.push(el));
+    traversalFn(current).forEach((el) => checklist.push(el));
   }
 
   return retValue;

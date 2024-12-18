@@ -26,16 +26,16 @@ export const first = pipe(
       filter(pipe(end, eq(0))),
       map(start),
       map((pos) =>
-        bfs(
-          grid,
-          [pos],
-          (current) => (getPointValue(grid, current) === 9 ? 1 : null),
-          (current) =>
+        bfs({
+          toCheck: [pos],
+          stopCondition: (current) =>
+            getPointValue(grid, current) === 9 ? 1 : null,
+          traversalFn: (current) =>
             getStrictNeighbors(current).filter(
               (el) =>
                 getPointValue(grid, el) - getPointValue(grid, current) === 1
-            )
-        )
+            ),
+        })
       ),
       map(sum)
     ),
@@ -45,17 +45,17 @@ export const first = pipe(
 export const second = pipe(
   parseInput,
   (grid) =>
-    bfs(
-      grid,
-      spreadGrid(grid)
+    bfs({
+      toCheck: spreadGrid(grid)
         .filter(([, val]) => val === 0)
         .map(start),
-      (current) => (getPointValue(grid, current) === 9 ? 1 : null),
-      (current) =>
+      stopCondition: (current) =>
+        getPointValue(grid, current) === 9 ? 1 : null,
+      traversalFn: (current) =>
         getStrictNeighbors(current).filter(
           (el) => getPointValue(grid, el) - getPointValue(grid, current) === 1
         ),
-      true
-    ),
+      canBacktrack: true,
+    }),
   sum
 );
