@@ -1,81 +1,16 @@
 import {
-  add,
-  allNeighborDirs,
-  apply,
-  asc,
-  call,
-  cartesian,
-  construct,
-  copy,
-  count,
-  desc,
-  difference,
-  divideWether,
-  end,
-  enumerate,
   eq,
-  every,
-  exec,
   filter,
-  find,
   flatMap,
-  flatten,
-  flip,
-  gcd,
-  getAllNeighbors,
-  getPointValue,
-  getStrictNeighbors,
-  hash,
-  I,
-  intersection,
-  invoke,
-  join,
   K,
-  lcm,
-  log,
   map,
-  mapFn,
-  mapObject,
-  match,
-  max,
-  min,
-  mul,
-  multiply,
   negate,
-  or,
-  orElse,
-  pairwise,
-  parseGrid,
-  pick,
   pipe,
-  pluck,
-  priorityQueue,
-  range,
-  reduce,
-  reverse,
-  rotate,
-  scan,
   sequence,
-  shift,
-  sort,
   split,
-  splitByLine,
   splitEvery,
-  spreadGrid,
-  start,
-  strictNeighborDirs,
-  sub,
   sum,
-  symmetricDifference,
-  take,
-  toArray,
   toInt,
-  toInts,
-  translate,
-  transpose,
-  traverse,
-  union,
-  zip,
 } from 'utils';
 
 const parseInput = pipe(split(''), map(toInt), splitEvery(2));
@@ -92,7 +27,6 @@ export const first = pipe(
     while (res.findIndex(eq('.')) !== nonEmpty) {
       const lastFile = res.findLastIndex(negate(eq('.')));
       const firstEmpty = res.findIndex(eq('.'));
-      console.log(firstEmpty, lastFile);
 
       res[firstEmpty] = res[lastFile];
       res[lastFile] = '.';
@@ -113,7 +47,6 @@ export const second = pipe(
     let res = [...files];
 
     filesToProcess.forEach(([id, len, empty = 0], i) => {
-      console.log(i);
       const firstFree = res.findIndex((el) => el[2] >= len);
       const toMove = res.findIndex((el) => el[0] === id);
 

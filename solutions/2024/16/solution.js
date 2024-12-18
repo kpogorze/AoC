@@ -1,83 +1,16 @@
 import {
-  add,
-  allNeighborDirs,
-  apply,
-  asc,
-  call,
-  cartesian,
-  construct,
-  copy,
-  count,
-  desc,
-  difference,
-  divideWether,
-  end,
-  enumerate,
   eq,
-  every,
   exec,
-  filter,
-  find,
-  flatMap,
-  flatten,
-  flip,
-  gcd,
-  getAllNeighbors,
   getPointValue,
-  getStrictNeighbors,
   hash,
-  I,
-  intersection,
-  invoke,
-  join,
-  K,
-  lcm,
-  log,
-  map,
-  mapFn,
-  mapObject,
-  match,
-  max,
-  memoize,
-  min,
-  mul,
-  multiply,
-  negate,
-  or,
-  orElse,
-  pairwise,
   parseGrid,
-  pick,
   pipe,
   pluck,
   priorityQueue,
-  range,
-  reduce,
-  reverse,
-  rotate,
-  scan,
-  sequence,
-  shift,
-  sort,
-  split,
-  splitByLine,
-  splitEvery,
   spreadGrid,
-  start,
   strictNeighborDirs,
-  sub,
-  sum,
-  symmetricDifference,
-  take,
-  toArray,
-  toInt,
-  toInts,
   translate,
-  transpose,
-  traverse,
-  union,
   unique,
-  zip,
 } from 'utils';
 
 const parseInput = pipe(parseGrid);
@@ -189,16 +122,6 @@ export const second = pipe(parseInput, (grid) =>
           continue;
         }
 
-        console.log(
-          currentPos.join(),
-          pathValue,
-          lowestPathForPos,
-          lowestPath,
-          toCheck.length,
-          pathSoFar.length,
-          Object.values(pathRecord).length
-        );
-
         const nextMoves = [
           [
             translate(currentPos, strictNeighborDirs[currentDir]),
@@ -225,13 +148,9 @@ export const second = pipe(parseInput, (grid) =>
         );
       }
 
-      console.log(lowestPath, pathRecord);
-
       return best;
     },
-    log,
     unique,
-    log,
     pluck('length')
   )
 );

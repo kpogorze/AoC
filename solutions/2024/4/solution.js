@@ -5,7 +5,6 @@ import {
   filter,
   flatMap,
   join,
-  log,
   map,
   mapFn,
   mul,

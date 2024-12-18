@@ -1,5 +1,4 @@
 import {
-  construct,
   end,
   eq,
   exec,
@@ -11,6 +10,7 @@ import {
   mul,
   parseGrid,
   pipe,
+  pluck,
   spreadGrid,
   start,
   strictNeighborDirs,
@@ -19,6 +19,7 @@ import {
   toInts,
   translate,
   traverse,
+  unique,
 } from 'utils';
 
 const parseInput = pipe(
@@ -65,8 +66,8 @@ export const first = pipe(
   toArray,
   map(toInts),
   map(take(2)),
-  map((el) => hash(el)),
-  construct(Set)
+  unique,
+  pluck('length')
 );
 
 export const second = pipe(parseInput, (grid) =>
@@ -116,6 +117,7 @@ export const second = pipe(parseInput, (grid) =>
       }
       grid.set(hash(obstaclePos), '.');
       return false;
-    })
+    }),
+    pluck('length')
   )
 );
