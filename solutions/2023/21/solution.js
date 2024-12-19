@@ -19,8 +19,7 @@ const directions = [
   [-1, 0], // up
 ];
 
-const debugGrid = parseGrid(input);
-const debug = (possible) => {
+const debug = (debugGrid, possible) => {
   const maxX = Math.max(...possible.map(pick(0)), debugGrid.length - 1);
   const minX = Math.min(...possible.map(pick(0)), 0);
   const maxY = Math.max(...possible.map(pick(1)), debugGrid.length - 1);
@@ -82,10 +81,9 @@ export const first = pipe(
           }
         });
       }
-      debug([...nextToCheck.values()].map(toInts));
     }
 
-    return nextToCheck.size;
+    return nextToCheck.size - 1;
   }
 );
 

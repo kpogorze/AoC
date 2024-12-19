@@ -1,4 +1,4 @@
-import { count, map, multiply, pipe, split } from 'utils';
+import { count, K, map, multiply, pipe, split } from 'utils';
 
 // solved by hand lol
 // TODO: try solutions to find them
@@ -53,3 +53,5 @@ export const first = pipe(
   Object.keys,
   multiply
 );
+
+export const second = pipe(K('trud skończon'));

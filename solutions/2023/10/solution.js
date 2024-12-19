@@ -1,4 +1,4 @@
-import { filter, log, map, max, pipe, split, translate } from 'utils';
+import { filter, map, max, pipe, split, translate } from 'utils';
 
 const directions = {
   east: [0, 1],
@@ -44,15 +44,12 @@ export const first = pipe(
     const toVisit = [[startingPosition, 0]];
 
     const visit = ([pos, distance]) => {
-      console.log(pos, distance);
       visited.set(pos.toString(), distance);
       const nextDirs = findAcceptableDirections(pos);
 
       pipe(
         map((dirName) => translate(pos, directions[dirName])),
-        log,
         filter((nextPos) => !visited.has(nextPos.toString())),
-        log,
         map((nextPos) => toVisit.push([nextPos, distance + 1]))
       )(nextDirs);
     };

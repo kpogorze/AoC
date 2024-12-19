@@ -42,16 +42,30 @@ const countPossibilities = memoize(([gears, groups]) => {
   }
 });
 
-const foldRate = 5;
-
 export const first = pipe(
   split('\n'),
   map(split(' ')),
   map(([gears, operational]) => [
-    sequence(1, foldRate)
+    sequence(1, 1)
       .map(() => gears)
       .join('?'),
-    sequence(1, foldRate)
+    sequence(1, 1)
+      .map(() => operational)
+      .join(','),
+  ]),
+  map(([gears, operational]) => [gears.split(''), toInts(operational)]),
+  map((arr) => countPossibilities(arr)),
+  sum
+);
+
+export const second = pipe(
+  split('\n'),
+  map(split(' ')),
+  map(([gears, operational]) => [
+    sequence(1, 5)
+      .map(() => gears)
+      .join('?'),
+    sequence(1, 5)
       .map(() => operational)
       .join(','),
   ]),

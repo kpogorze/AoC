@@ -9,6 +9,7 @@ import {
   sort,
   split,
   sum,
+  toInt,
   translate,
 } from 'utils';
 
@@ -123,7 +124,12 @@ const calculateSurfaceArea = (digs) => {
   return total;
 };
 
-export const first = pipe(split('\n'), map(split(' ')), calculateSurfaceArea);
+export const first = pipe(
+  split('\n'),
+  map(split(' ')),
+  map(([dir, len]) => [directions[dir], toInt(len)]),
+  calculateSurfaceArea
+);
 
 export const second = pipe(
   split('\n'),

@@ -75,10 +75,11 @@ export const first = pipe(
       }
     });
 
-    return [high, low, high * low];
+    return high * low;
   }
 );
 
+// TODO
 export const second = pipe(
   split('\n'),
   map(split(' -> ')),

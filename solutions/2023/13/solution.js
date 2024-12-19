@@ -9,7 +9,6 @@ const countReflections = (grid) =>
           rowId - i,
           rowId + 1 + i,
         ]);
-        console.log(reflectionPairs);
         return reflectionPairs
           .map(([i, j]) => [grid[i], grid[j]])
           .every(([a, b]) => a.every((el, i) => el === b[i]))

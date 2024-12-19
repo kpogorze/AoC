@@ -25,15 +25,14 @@ const acceptableSlopeDirs = {
 
 const eq = (a, b) => a.every((el, i) => el === b[i]) && a.length === b.length;
 
-const debugGrid = parseGrid(input);
-
 const startingPos = [0, 1];
-const endingPos = [debugGrid.length - 1, debugGrid.length - 2];
+let endingPos;
 
 export const first = pipe(
   parseGrid,
   (grid) => {
     const toCheck = [[startingPos, new Set([startingPos.toString()])]];
+    endingPos = [grid.length - 1, grid.length - 2];
 
     const paths = [];
 
@@ -82,6 +81,7 @@ export const first = pipe(
 export const second = pipe(
   parseGrid,
   (grid) => {
+    endingPos = [grid.length - 1, grid.length - 2];
     const areas = [];
 
     let id = 0;
