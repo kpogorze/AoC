@@ -431,7 +431,6 @@ export const bfs = ({
   canBacktrack = false,
   returnFirst = false,
 }) => {
-  debugger;
   const checkList = [...toCheck];
   const checked = [];
   const retValue = [];
