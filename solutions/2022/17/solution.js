@@ -144,7 +144,6 @@ export const first = pipe(
           const newFloor = newFloorPoints(chamber);
 
           if (newFloor) {
-            debug(chamber, newFloor);
             const localMinHeight = Math.min(...newFloor.map(([x, y]) => x));
             localMaxHeight = localMaxHeight - localMinHeight;
             maxHeight = maxHeight + localMinHeight;
@@ -166,7 +165,7 @@ const toStringState = (chamber) => {
     .join('');
 };
 
-const second = pipe(
+export const second = pipe(
   split(''),
   map((jet) => (jet === '>' ? [0, 1] : [0, -1])),
   (jets) => {
@@ -227,13 +226,6 @@ const second = pipe(
             i % figures.length === figureNo &&
             jetOrder % jets.length === jetNo
           ) {
-            console.log(
-              'Cycle detected',
-              i,
-              i - chamberStates.get(chamberStateKey)[0],
-              chamberStates.get(chamberStateKey),
-              [i, i % figures.length, jetOrder % jets.length]
-            );
             return [
               chamberStates.get(chamberStateKey)[0],
               i - chamberStates.get(chamberStateKey)[0],

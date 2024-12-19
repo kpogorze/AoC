@@ -1,4 +1,15 @@
-import { pipe, split, map, toInt, reverse, sum, join, log } from 'utils';
+import {
+  pipe,
+  split,
+  map,
+  toInt,
+  reverse,
+  sum,
+  join,
+  log,
+  K,
+  exec,
+} from 'utils';
 
 const snafuToDec = pipe(
   split(''),
@@ -38,3 +49,5 @@ const decToSnafu = pipe(
 );
 
 export const first = pipe(split('\n'), map(snafuToDec), sum, decToSnafu, log);
+
+export const second = pipe(K('trud skończon'), log);

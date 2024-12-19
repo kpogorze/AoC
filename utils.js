@@ -202,9 +202,9 @@ export const sub = curry((a, b) => a - b);
 
 export const div = curry((a, b) => a / b);
 
-export const sum = scan(add);
+export const sum = reduce(0, add);
 
-export const multiply = scan(mul);
+export const multiply = reduce(1, mul);
 
 export const max = apply(Math.max);
 

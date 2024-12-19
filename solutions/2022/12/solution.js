@@ -1,4 +1,4 @@
-import { asc, log, map, pipe, sort, split, splitByLine } from 'utils';
+import { asc, map, pipe, sort, split, splitByLine, start } from 'utils';
 
 const S = [20, 0];
 const E = [20, 139];
@@ -45,7 +45,6 @@ const prepareGrid = pipe(
   splitByLine,
   map(split('')),
   map(map((c) => c.charCodeAt(0) - 'a'.charCodeAt(0))),
-  log,
   (grid) => {
     grid[S[0]][S[1]] = 0;
     grid[E[0]][E[1]] = 'z'.charCodeAt(0) - 'a'.charCodeAt(0);
@@ -54,11 +53,7 @@ const prepareGrid = pipe(
   }
 );
 
-export const first = pipe(
-  prepareGrid,
-  (grid) => findPathLength(S, E, grid),
-  log
-);
+export const first = pipe(prepareGrid, (grid) => findPathLength(S, E, grid));
 
 export const second = pipe(
   prepareGrid,
@@ -69,5 +64,5 @@ export const second = pipe(
       .map((begin) => findPathLength(begin, E, grid))
       .filter((len) => len !== -1),
   sort(asc),
-  log
+  start
 );

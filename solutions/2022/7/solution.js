@@ -1,6 +1,6 @@
-import { input } from './input.js';
 import {
   asc,
+  exec,
   log,
   map,
   pick,
@@ -68,7 +68,7 @@ const dirSizes = pipe(
   (root) => {
     const sizes = [];
     const getSize = (file) => {
-      const size = +file.size + pipe(map(getSize), sum)(file.children);
+      const size = +file.size + sum(file.children.map(getSize));
       if (file.children.length) {
         sizes.push(size);
       }
@@ -79,24 +79,27 @@ const dirSizes = pipe(
 
     return sizes;
   }
-)(input);
+);
 
 const total = pipe(
   splitByLine,
   map(split(' ')),
   (arr) => arr.filter((line) => Number.isInteger(+line[0])),
   map((line) => +line[0]),
-  sum,
-  log
-)(input);
+  sum
+);
 
 export const first = pipe(
+  dirSizes,
   (arr) => arr.filter((i) => i <= 100000),
   sum
-)(dirSizes);
+);
 
 export const second = pipe(
-  (arr) => arr.filter((i) => i >= 30000000 - (70000000 - total)),
+  (input) =>
+    exec(input, dirSizes, (arr) =>
+      arr.filter((i) => i >= 30000000 - (70000000 - total(input)))
+    ),
   sort(asc),
   pick(0)
-)(dirSizes);
+);

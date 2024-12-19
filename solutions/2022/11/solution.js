@@ -1,6 +1,4 @@
-import { desc, log, map, pipe, sort, split, splitByLine, toInt } from 'utils';
-
-const takeLast = (arr) => arr[arr.length - 1];
+import { desc, end, map, pipe, sort, split, splitByLine, toInt } from 'utils';
 
 export const first = pipe(
   split('\n\n'),
@@ -19,9 +17,9 @@ export const first = pipe(
     let getSecond = (n) =>
       isNaN(toInt(expression[2])) ? n : toInt(expression[2]);
 
-    let mod = toInt(takeLast(arr[3][1].split(' ')));
-    let yes = toInt(takeLast(arr[4][1].split(' ')));
-    let no = toInt(takeLast(arr[5][1].split(' ')));
+    let mod = toInt(end(arr[3][1].split(' ')));
+    let yes = toInt(end(arr[4][1].split(' ')));
+    let no = toInt(end(arr[5][1].split(' ')));
 
     let test = (n) => (n % mod === 0 ? yes : no);
 
@@ -35,7 +33,6 @@ export const first = pipe(
       times: 0,
     };
   }),
-  log,
   (monkeys) => {
     for (let i = 0; i < 20; i++) {
       monkeys.forEach((monkey) => {
@@ -47,20 +44,13 @@ export const first = pipe(
 
         monkey.items = [];
       });
-
-      console.log(
-        i + 1,
-        monkeys.map((m) => m.times)
-      );
     }
 
     return monkeys;
   },
   map((m) => m.times),
-  log,
   sort(desc),
-  (a) => a[0] * a[1],
-  log
+  (a) => a[0] * a[1]
 );
 
 export const second = pipe(
@@ -82,9 +72,9 @@ export const second = pipe(
     let getSecond = (n) =>
       isNaN(toInt(expression[2])) ? n : toInt(expression[2]);
 
-    let mod = toInt(takeLast(arr[3][1].split(' ')));
-    let yes = toInt(takeLast(arr[4][1].split(' ')));
-    let no = toInt(takeLast(arr[5][1].split(' ')));
+    let mod = toInt(end(arr[3][1].split(' ')));
+    let yes = toInt(end(arr[4][1].split(' ')));
+    let no = toInt(end(arr[5][1].split(' ')));
 
     let test = (n) => (n % mod === 0 ? yes : no);
 
@@ -121,17 +111,11 @@ export const second = pipe(
 
         monkey.items = [];
       });
-
-      console.log(
-        i + 1,
-        monkeys.map((m) => m.times)
-      );
     }
 
     return monkeys;
   },
   map((m) => m.times),
   sort(desc),
-  (a) => a[0] * a[1],
-  log
+  (a) => a[0] * a[1]
 );

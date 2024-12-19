@@ -28,7 +28,7 @@ export const first = pipe(
       if (by === rowToCheck) forbidden.delete(bx);
     });
 
-    return forbidden;
+    return forbidden.size;
   }
 );
 

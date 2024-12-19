@@ -1,4 +1,4 @@
-import { log, map, pipe, split, toInt } from 'utils';
+import { map, pipe, split, toInt } from 'utils';
 
 const getRockTiles = pipe(
   split('\n'),
@@ -57,28 +57,24 @@ export const first = pipe(getRockTiles, (occupied) => {
     currentSand = getNewSandPos(0, -Infinity);
   }
 
-  return sands;
+  return sands.length;
 });
 
-export const second = pipe(
-  getRockTiles,
-  (occupied) => {
-    const floorY = Math.max(...occupied.map(([x, y]) => y)) + 2;
-    const sandsToCheck = [[0, 0]];
-    const sands = new Set();
-    const positions = new Set(occupied.map(([x, y]) => `x${x}y${y}`));
+export const second = pipe(getRockTiles, (occupied) => {
+  const floorY = Math.max(...occupied.map(([x, y]) => y)) + 2;
+  const sandsToCheck = [[0, 0]];
+  const sands = new Set();
+  const positions = new Set(occupied.map(([x, y]) => `x${x}y${y}`));
 
-    while (sandsToCheck.length) {
-      const [x, y] = sandsToCheck.shift();
-      const coords = `x${x}y${y}`;
-      if (sands.has(coords) || y === floorY || positions.has(coords)) continue;
-      sands.add(coords);
-      sandsToCheck.push([x, y + 1]);
-      sandsToCheck.push([x - 1, y + 1]);
-      sandsToCheck.push([x + 1, y + 1]);
-    }
+  while (sandsToCheck.length) {
+    const [x, y] = sandsToCheck.shift();
+    const coords = `x${x}y${y}`;
+    if (sands.has(coords) || y === floorY || positions.has(coords)) continue;
+    sands.add(coords);
+    sandsToCheck.push([x, y + 1]);
+    sandsToCheck.push([x - 1, y + 1]);
+    sandsToCheck.push([x + 1, y + 1]);
+  }
 
-    return sands;
-  },
-  log
-);
+  return sands.size;
+});

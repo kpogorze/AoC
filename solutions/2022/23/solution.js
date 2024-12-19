@@ -127,3 +127,5 @@ export const first = pipe(
     return [firstSolution, rounds + 1];
   }
 );
+
+export const second = first;

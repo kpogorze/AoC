@@ -1,11 +1,10 @@
 import {
   filter,
-  log,
   map,
   pick,
   pipe,
-  sequence,
   reduce,
+  sequence,
   split,
   toInts,
   translate,
