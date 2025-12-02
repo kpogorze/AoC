@@ -391,7 +391,7 @@ export function count<T extends string | number>(
 
 export function pairwise<T>(
   arr: ReadonlyArray<T>
-): ReadonlyArray<ReadonlyArray<T>>;
+): ReadonlyArray<readonly [T, T]>;
 
 export function rotate<T>(
   amount: number
