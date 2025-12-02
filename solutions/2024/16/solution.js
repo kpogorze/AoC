@@ -20,6 +20,7 @@ export const first = pipe(parseInput, (grid) =>
     const startPos = points.find((el) => el[1] === 'S')[0];
     const endPos = points.find((el) => el[1] === 'E')[0];
     const startDir = 1;
+    /** @type {Record<string, number>} */
     const pathRecord = {};
     const toCheck = priorityQueue([[[startPos, startDir, 0, []], 0]]);
     let lowestPath = Infinity;
@@ -85,6 +86,7 @@ export const second = pipe(parseInput, (grid) =>
       const startPos = points.find((el) => el[1] === 'S')[0];
       const endPos = points.find((el) => el[1] === 'E')[0];
       const startDir = 1;
+      /** @type {Record<string, number>} */
       const pathRecord = {};
       const toCheck = [[startPos, startDir, 0, []]];
       let lowestPath = Infinity;

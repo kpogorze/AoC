@@ -20,6 +20,7 @@ const parseInput = pipe(split('\n\n'), map(split('\n')), ([a, b]) => [
 export const first = pipe(
   parseInput,
   ([input, rawGates]) => {
+    /** @type {Record<string, Array<[string, string, string]>>} */
     const gates = {};
 
     rawGates.forEach(([a, op, b, , c]) => {
@@ -78,6 +79,7 @@ export const first = pipe(
 // and carry from previous position (OR)
 // below code shows what type of gate and on what input z gates depend
 export const second = pipe(parseInput, ([input, rawGates]) => {
+  /** @type {Record<string, [string, string, string]>} */
   const gates = {};
 
   rawGates.forEach(([a, op, b, , c]) => {

@@ -22,6 +22,7 @@ const toNonZeroValvesGraph = (valves) => {
     .map(([name]) => name);
 
   const timeToOtherValves = (valveName) => {
+    /** @type {Record<string, number>} */
     const valveDistances = {};
     const visited = new Set([valveName]);
     let toCheck = [...valves[valveName][1].map((valve) => [valve, 1])];

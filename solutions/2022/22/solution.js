@@ -24,7 +24,7 @@ const directions = [
 ];
 
 const parseLevel = pipe(split('\n'), map(split('')), (grid) => [
-  reduce({}, (acc, row, rowIndex) =>
+  reduce(/** @type {Record<string, string>} */ ({}), (acc, row, rowIndex) =>
     reduce(acc, (innerAcc, point, colIndex) => {
       if (point !== ' ') {
         const hash = [rowIndex, colIndex].toString();

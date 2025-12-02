@@ -12,6 +12,7 @@ const mul = (a, b) => a * b;
 const div = (a, b) => a / b;
 
 export const first = pipe(parseInput, (monkeys) => {
+  /** @type {Record<string, () => number>} */
   const monkeysToFunc = {};
 
   monkeys.forEach(([name, operation]) => {
@@ -47,6 +48,7 @@ export const first = pipe(parseInput, (monkeys) => {
 });
 
 export const second = pipe(parseInput, (monkeys) => {
+  /** @type {Record<string, () => number | [number, number]>} */
   const monkeysToFunc = {};
   let humanValue;
 
