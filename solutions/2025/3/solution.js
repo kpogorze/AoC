@@ -5,7 +5,6 @@ import {
   max,
   pairwise,
   pipe,
-  sequence,
   split,
   splitByLine,
   sum,
@@ -28,29 +27,30 @@ export const first = pipe(
 export const second = pipe(
   parseInput,
   map((row) => {
-    let initial = [...sequence(row.length - 12, row.length - 1)];
+    let solution = row.slice(row.length - 12);
 
     for (let i = row.length - 13; i >= 0; i--) {
       let newVal = row[i];
 
-      if (newVal < row[initial[0]]) {
+      if (newVal < solution[0]) {
         continue;
       }
 
-      initial.unshift(i);
+      solution.unshift(newVal);
 
-      const toRemove = pairwise(initial).find(([a, b]) => row[a] < row[b]);
+      const toRemove = pairwise(solution).findIndex(([a, b]) => a < b);
+
       if (toRemove) {
-        initial.splice(initial.indexOf(toRemove[0]), 1);
+        solution.splice(toRemove, 1);
       } else {
-        initial.pop();
+        solution.pop();
       }
     }
-    return initial.map((n) => row[n]);
+
+    return solution;
   }),
+  log,
   map(join('')),
-  log,
   map(toInt),
-  log,
   sum
 );
