@@ -315,8 +315,8 @@ export function mapObject<
   mapfn: (arg: [TK, T]) => readonly [UK, U]
 ): (obj: Record<TK, T>) => Record<UK, U>;
 
-export function eq<const T>(a: T, b: T): boolean;
-export function eq<const T>(a: T): (b: T) => boolean;
+export function eq<T>(a: T, b: T): boolean;
+export function eq<T>(a: T): (b: T) => boolean;
 
 export function construct<T extends new (...args: any) => any>(
   cons: T
